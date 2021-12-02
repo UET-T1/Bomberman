@@ -57,6 +57,9 @@ public class Window {
 
     GL.createCapabilities();
 
+    //Set default callbacks for Input object
+    setCallback();
+
     // Make opengl context current
     GLFW.glfwShowWindow(window);
 
@@ -104,7 +107,7 @@ public class Window {
   }
 
   public boolean isClose() {
-    return input.isKeyDown(GLFW.GLFW_KEY_ESCAPE) || GLFW.glfwWindowShouldClose(window);
+      return input.isKeyDown(GLFW.GLFW_KEY_ESCAPE) || GLFW.glfwWindowShouldClose(window);
   }
 
   public void destroy() {
@@ -124,5 +127,9 @@ public class Window {
 
   public boolean isKeyDown(int keyCode) {
     return GLFW.glfwGetKey(window, keyCode) == GLFW.GLFW_PRESS;
+  }
+
+  public Input getInputObj() {
+    return input;
   }
 }
