@@ -13,21 +13,15 @@ import main.engine.testGUI.Mesh;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Deadpool extends CapA {
+    
+    private boolean dk;
 
+    private boolean autoMode;
+    
     public Deadpool(Mesh mesh) {
         super(mesh);
         dk = false;
         autoMode = false;
-        isInBomb = false;
-    }
-
-    private boolean dk;
-
-    private boolean autoMode;
-
-    @Override
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 
     @Override
