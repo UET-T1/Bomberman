@@ -18,7 +18,7 @@ public class GameEngine implements Runnable {
     // Construction.
     public GameEngine(String windowTitle, int width, int height, GameLogic gameLogic) throws Exception {
         window = new Window(width, height, "Bomman");
-        input = new Input();
+        input = window.getInputObj();
         this.gameLogic = gameLogic;
         timer = new Timer();
     }

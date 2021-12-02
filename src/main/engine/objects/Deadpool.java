@@ -37,7 +37,7 @@ public class Deadpool extends CapA {
         }
         if (!autoMode) {
             // Not work??
-            if (input.isKeyDown(GLFW_KEY_LEFT)) System.out.println(1);
+            if (input.isKeyDown(GLFW_KEY_LEFT)) System.err.println(1);
 
             Vector3f pos = getPosition();
             pos = round100(pos);
