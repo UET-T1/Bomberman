@@ -10,7 +10,7 @@ public class Input {
   private final boolean[] keys = new boolean[GLFW.GLFW_KEY_LAST];
   private final boolean[] buttons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
   private double x, y;
-  private final GLFWKeyCallback keyboard;
+  private GLFWKeyCallback keyboard;
   private final GLFWMouseButtonCallback mouseButtons;
   private final GLFWCursorPosCallback mousePos;
 

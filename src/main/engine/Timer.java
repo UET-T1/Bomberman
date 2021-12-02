@@ -17,6 +17,9 @@ public class Timer {
     lastLoop = time;
     return elapsed;
   }
-
+  
+  public double getLastLoopTime() {
+    return lastLoop;
+  }
 
 }
