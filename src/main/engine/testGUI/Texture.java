@@ -20,6 +20,7 @@ public class Texture {
         this.id = id;
     }
 
+
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
     }
@@ -71,5 +72,9 @@ public class Texture {
 
     public void cleanup() {
         glDeleteTextures(id);
+    }
+
+    private void create() {
+
     }
 }

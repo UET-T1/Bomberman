@@ -1,4 +1,4 @@
-package main.engine.util.opengl;
+package main.engine.util.graphic;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
