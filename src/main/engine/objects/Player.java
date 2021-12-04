@@ -17,7 +17,7 @@ import main.engine.testGUI.Mesh;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Deadpool extends GameObject implements Movable, Auto {
+public class Player extends GameObject implements Movable, Auto {
     
     private boolean autoMode;// true if autoMode is ON
 
@@ -41,7 +41,7 @@ public class Deadpool extends GameObject implements Movable, Auto {
 
     protected Vector3f targetPosition;// target position
     
-    public Deadpool(Mesh mesh) {
+    public Player(Mesh mesh) {
         super(mesh);
         autoMode = true;
         bombsOfMe = new Bomb[1];
