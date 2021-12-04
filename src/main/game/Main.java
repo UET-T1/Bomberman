@@ -1,8 +1,8 @@
 package main.game;
 
+import main.engine.BommanGame;
 import main.engine.GameEngine;
 import main.engine.GameLogic;
-import main.engine.objects.BommanGame;
 
 public class Main {
  

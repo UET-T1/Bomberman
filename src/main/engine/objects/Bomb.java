@@ -1,40 +1,81 @@
 package main.engine.objects;
 
+import main.engine.GameObject;
+import main.engine.Input;
+import main.engine.ObjectManager;
+import main.engine.Renderer;
 import main.engine.Timer;
+import main.engine.Window;
 import main.engine.testGUI.Mesh;
 
 //Bomb Item
-public class Bomb extends StaticItem{
+public class Bomb extends GameObject{
 
     private Timer time; // calculate the time to "BOOM"
     private boolean isStart; //true if bomb is start
+    private int power; //power of the bomb
+    private float durationTime; //duration time of bomb
+    private float timeToBoom;// acuracy time to "BOOM"
+    private boolean isShow;
 
-    //Constructor
-    public Bomb(Mesh mesh) {
+    public Bomb(Mesh mesh, float durationTime) throws Exception {
         super(mesh);
         time = new Timer();
+        power = 1;
+        this.durationTime = durationTime;
+        isStart = false;
+        isShow = false;
     }
 
-    //"BOOM" function to break the broken wall or people
-    public void boom(StaticItem[][] tileBrokenWall) {
+    public Bomb(Bomb bomb) {
+        super(bomb.getMesh());
+        time = bomb.time;
+        power = bomb.power;
+        this.durationTime = bomb.durationTime;
+        this.isStart = bomb.isStart();
+        this.isShow = bomb.isShow();
+    }
+
+    public float getTime() {
+        return (float) (time.getTime() - time.getLastLoopTime());
+    }
+
+    public void setTimeToBoom(float timeToBoom) {
+        this.timeToBoom = timeToBoom;
+    }
+
+    public float getTimeToBoom() {
+        return timeToBoom;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    //check if bomb is start?
+    public boolean isStart() {
+        return isStart;
+    }
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void stop() {
+        isStart = false;
+    }
+
+    public float getDurationTime() {
+        return durationTime;
+    }
+
+    public void handleEvent() {
         if (isStart) {
-            if (time.getTime() >= 2.0f + time.getLastLoopTime()) {
+            if (isShow && time.getTime() >= durationTime + time.getLastLoopTime()) {
+                boom();
+            }
+            if (time.getTime() >= durationTime + time.getLastLoopTime() + 0.5f) {
                 isStart = false;
-                for (StaticItem[] brokenWalls : tileBrokenWall) {
-                    for (StaticItem brokenWall : brokenWalls) {
-                        if (brokenWall.getVisible()) {
-                            int x1 = (int) brokenWall.getPosition().x;
-                            int x2 = (int) getPosition().x;
-                            int y1 = (int) brokenWall.getPosition().y;
-                            int y2 = (int) getPosition().y;
-                            if (x1 == x2 && Math.abs(y1 - y2) == 1) {
-                                brokenWall.setVisible(false);
-                            } else if (y1 == y2 && Math.abs(x1 - x2) == 1) {
-                                brokenWall.setVisible(false);
-                            }
-                        }
-                    }
-                }
             }
         }
     }
@@ -43,10 +84,92 @@ public class Bomb extends StaticItem{
     public void start() {
         time.init();
         isStart = true;
+        isShow = true;
     }
 
-    //check if bomb is start?
-    public boolean isStart() {
-        return isStart;
+    //"BOOM" function to break the broken wall or people
+    public void boom() {
+        isShow = false;
+        boomCenter();
+        boomLeft();
+        boomRight();
+        boomUp();
+        boomDown();
     }
+
+    private void boomCenter() {
+        int x = (int) getPosition().x + 7;
+        int y = (int) getPosition().y + 7;
+        ObjectManager.setStartOfFlame(x, y);
+    }
+
+    private void boomLeft() {
+        int x = (int) getPosition().x + 7;
+        int y = (int) getPosition().y + 7;
+        for (int i = 1; i <= power; ++i) {
+            if (x + i < ObjectManager.width) {
+                ObjectManager.lanFromBomb(x + i, y);
+            }
+        }
+    }
+
+    private void boomRight() {
+        int x = (int) getPosition().x + 7;
+        int y = (int) getPosition().y + 7;
+        for (int i = 1; i <= power; ++i) {
+            if (x - i >= 0) {
+                ObjectManager.lanFromBomb(x - i, y);
+            }
+        }
+    }
+
+    private void boomUp() {
+        int x = (int) getPosition().x + 7;
+        int y = (int) getPosition().y + 7;
+        for (int i = 1; i <= power; ++i) {
+            if (y + i < ObjectManager.height) {
+                ObjectManager.lanFromBomb(x, y + i);
+            }
+        }
+    }
+
+    private void boomDown() {
+        int x = (int) getPosition().x + 7;
+        int y = (int) getPosition().y + 7;
+        for (int i = 1; i <= power; ++i) {
+            if (y - i >= 0) {
+                ObjectManager.lanFromBomb(x, y - i);
+            }
+        }
+    }
+
+    @Override
+    public void render(Renderer renderer) {
+        renderer.render(this);
+    }
+
+    @Override
+    public void onCollapse() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onCollision() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void handleCollision() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void handleEvent(Window window, Input input) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

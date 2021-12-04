@@ -1,9 +1,7 @@
-package main.engine.objects;
+package main.engine;
 
 import org.joml.Matrix4f;
 
-import main.engine.GameItem;
-import main.engine.Window;
 import main.engine.testGUI.Camera;
 import main.engine.testGUI.ShaderProgram;
 import main.engine.testGUI.Transformation;
@@ -70,7 +68,7 @@ public class Renderer {
     }
 
     // render one game item
-    public void render(GameItem gameItem) {
+    public void render(GameObject gameItem) {
         if (gameItem.getMesh() != null) {
             // Set model view matrix for this item
             Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
