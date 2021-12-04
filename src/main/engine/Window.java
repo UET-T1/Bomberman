@@ -60,7 +60,7 @@ public class Window {
     //Set default callbacks for Input object
     setCallback();
 
-    // Make opengl context current
+    // Make graphic context current
     GLFW.glfwShowWindow(window);
 
     // Enable vsync to avoid screen tearing
@@ -70,8 +70,17 @@ public class Window {
 
     // Set the clear color
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+    // Set default version of OpenGl to 3.3
+    GLFW.glfwDefaultWindowHints();
+    GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
+    GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 3);
+    GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
+    GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
+
     glEnable(GL_DEPTH_TEST);
   }
+
 
   public void setResized(boolean b) {
     resized = b;
