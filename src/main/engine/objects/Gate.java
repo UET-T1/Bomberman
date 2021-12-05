@@ -6,33 +6,17 @@ import main.engine.Renderer;
 import main.engine.Window;
 import main.engine.testGUI.Mesh;
 
-public class Item extends GameObject{
+public class Gate extends GameObject {
 
-    private int function;
-    
-    private boolean visible;
-    
-    public Item(Mesh mesh, int function) {
+    public Gate(Mesh mesh) {
         super(mesh);
-        visible = false;
-        this.function = function;
+        //TODO Auto-generated constructor stub
     }
 
     @Override
     public void render(Renderer renderer) {
         renderer.render(this);
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public int getFunction() {
-        return function;
+        
     }
 
     @Override
@@ -56,6 +40,7 @@ public class Item extends GameObject{
     @Override
     public void handleEvent(Window window, Input input) throws Exception {
         // TODO Auto-generated method stub
+        
     }
     
 }

@@ -73,15 +73,17 @@ public class Bomb extends GameObject{
         if (isStart) {
             if (isShow && time.getTime() >= durationTime + time.getLastLoopTime()) {
                 boom();
+                time.init();
             }
-            if (time.getTime() >= durationTime + time.getLastLoopTime() + 0.5f) {
+            if (!isShow && time.getTime() >= time.getLastLoopTime() + 0.5f) {
                 isStart = false;
             }
         }
     }
 
     //starting bomb
-    public void start() {
+    public void start(int power) {
+        this.power = power;
         time.init();
         isStart = true;
         isShow = true;
@@ -91,54 +93,62 @@ public class Bomb extends GameObject{
     public void boom() {
         isShow = false;
         boomCenter();
-        boomLeft();
         boomRight();
+        boomLeft();
         boomUp();
         boomDown();
     }
 
     private void boomCenter() {
-        int x = (int) getPosition().x + 7;
-        int y = (int) getPosition().y + 7;
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
         ObjectManager.setStartOfFlame(x, y);
     }
 
-    private void boomLeft() {
-        int x = (int) getPosition().x + 7;
-        int y = (int) getPosition().y + 7;
+    private void boomRight() {
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
         for (int i = 1; i <= power; ++i) {
-            if (x + i < ObjectManager.width) {
-                ObjectManager.lanFromBomb(x + i, y);
+            if (x + i <= ObjectManager.width) {
+                if(!ObjectManager.lanFromBomb(x + i, y)) {
+                    return;
+                }
             }
         }
     }
 
-    private void boomRight() {
-        int x = (int) getPosition().x + 7;
-        int y = (int) getPosition().y + 7;
+    private void boomLeft() {
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
         for (int i = 1; i <= power; ++i) {
-            if (x - i >= 0) {
-                ObjectManager.lanFromBomb(x - i, y);
+            if (x - i >= 1) {
+                if (!ObjectManager.lanFromBomb(x - i, y)) {
+                    return;
+                }
             }
         }
     }
 
     private void boomUp() {
-        int x = (int) getPosition().x + 7;
-        int y = (int) getPosition().y + 7;
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
         for (int i = 1; i <= power; ++i) {
-            if (y + i < ObjectManager.height) {
-                ObjectManager.lanFromBomb(x, y + i);
+            if (y + i <= ObjectManager.height) {
+                if (!ObjectManager.lanFromBomb(x, y + i)) {
+                    return;
+                }
             }
         }
     }
 
     private void boomDown() {
-        int x = (int) getPosition().x + 7;
-        int y = (int) getPosition().y + 7;
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
         for (int i = 1; i <= power; ++i) {
-            if (y - i >= 0) {
-                ObjectManager.lanFromBomb(x, y - i);
+            if (y - i >= 1) {
+                if (!ObjectManager.lanFromBomb(x, y - i)) {
+                    return;
+                }
             }
         }
     }

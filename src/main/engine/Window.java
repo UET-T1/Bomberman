@@ -98,7 +98,7 @@ public class Window {
 
     frames++;
     if (System.currentTimeMillis() > time + 1000) {
-      GLFW.glfwSetWindowTitle(window, title + " | FPS: " + frames);
+      GLFW.glfwSetWindowTitle(window, title + " | FPS: " + frames + "   " + BommanGame.dem);
       time = System.currentTimeMillis();
       frames = 0;
     }

@@ -1,0 +1,57 @@
+{
+    "name": "Stage 1, Level 5 - H",
+	"img": "bomberman-assets/imgs/levels/level-04.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 35,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwww....wwwwwww", "1": "wwwww____wwwwwww" },
+        { "0": "wp__w....w     w", "1": "w   w____w     w" },
+        { "0": "w_c w....w bb  w", "1": "w   w____wb    w" },
+        { "0": "wcccw....w  b  w", "1": "w   w____w     w" },
+        { "0": "w b wwwwww  b  w", "1": "w   wwwwww  3  w" },
+        { "0": "wbb0c     c    w", "1": "w              w" },
+        { "0": "wc  wwwwww  b  w", "1": "w   wwwwww     w" },
+        { "0": "wc cw....w  b  w", "1": "w   w____w     w" },
+        { "0": "wcc w....w  b  w", "1": "w   w____w     w" },
+        { "0": "wf5 w....w c   w", "1": "w   w____w     w" },
+        { "0": "w   w....wcfe 1w", "1": "w   w____w    bw" },
+        { "0": "wwwww....wwwwwww", "1": "wwwww____wwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 10,
+            "nb": 1
+        },
+        "bombs": {
+            "chance": 15,
+            "nb": 1
+        },
+        "time": {
+            "chance": 20,
+            "nb": 1
+        },
+        "points": {
+            "chance": 15,
+            "nb": -1
+        }
+    }
+}

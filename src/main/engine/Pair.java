@@ -12,15 +12,15 @@ public class Pair {
         this.x = x;
         this.y = y;
         father = null;
-        value.x = x - 7;
-        value.y = y - 7;
+        value.x = x;
+        value.y = y;
     }
 
     public Pair(int x, int y, Pair father) {
         this.x = x;
         this.y = y;
         this.father = father;
-        value.x = x - 7;
-        value.y = y - 7;
+        value.x = x;
+        value.y = y;
     }
 }

@@ -1,0 +1,73 @@
+{
+    "name": "Stage 2, Level 15 - Snake",
+	"img": "bomberman-assets/imgs/levels/level-14.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 40,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
+        { "0": "w1_cb__bc__bc_pw", "1": "w              w" },
+        { "0": "w_c___c2__c0_b_w", "1": "w    b      b  w" },
+        { "0": "w_wwwwwwwwwwwwww", "1": "w   b3       b w" },
+        { "0": "wc_b_c__2c_b_c_w", "1": "w              w" },
+        { "0": "wb_c_b_c_b_c_b_w", "1": "w              w" },
+        { "0": "wwwwwwwwwwwwww w", "1": "w              w" },
+        { "0": "w_cc5bcc_wbb__2w", "1": "w   b        b w" },
+        { "0": "wc1_cc_bcc__cc_w", "1": "w    b      b  w" },
+        { "0": "wcwwwwwwwwwwwwww", "1": "w              w" },
+        { "0": "w_4______0____ew", "1": "w              w" },
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 10,
+            "nb": -1
+        },
+        "bombs": {
+            "chance": 15,
+            "nb": -1
+        },
+        "flames": {
+            "chance": 10,
+            "nb": -1
+        },
+        "speed": {
+            "chance": 10,
+            "nb": 4
+        },
+        "detonator": {
+            "chance": 1,
+            "nb": 1
+        },
+        "shield": {
+            "chance": 5,
+            "nb": 1
+        },
+        "time": {
+            "chance": 20,
+            "nb": 1
+        },
+        "points": {
+            "chance": 15,
+            "nb": 3
+        }
+    }
+}

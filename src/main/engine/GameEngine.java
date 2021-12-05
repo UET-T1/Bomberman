@@ -51,8 +51,10 @@ public class GameEngine implements Runnable {
         boolean running = true;
         while (running && !window.isClose()) {
 
-            // Timer time = new Timer();
-            // time.init();
+            //find avg time
+            Timer time = new Timer();
+            time.init();
+            //
 
             elapsedTime = timer.getTimeElapsed();
             accumulator += elapsedTime;
@@ -66,7 +68,18 @@ public class GameEngine implements Runnable {
 
             render();
 
-            // System.out.println(time.getTime() - time.getLastLoopTime());
+            //find avg time
+            float x = (float) (time.getTime() - time.getLastLoopTime());
+            if(x < 1/50f) {
+                ObjectManager.totalDem += 1;
+                ObjectManager.totalTime += x;
+                ObjectManager.avgTimePerFrame = (ObjectManager.totalTime) / (ObjectManager.totalDem);
+            }
+            if (ObjectManager.totalTime > 10.0f) {
+                ObjectManager.totalTime = 1.0f/60;
+                ObjectManager.totalDem = 1;
+            }
+            // System.out.println(ObjectManager.avgTimePerFrame);
             // System.out.println((1.0f/60));
             // System.out.println();
         }
