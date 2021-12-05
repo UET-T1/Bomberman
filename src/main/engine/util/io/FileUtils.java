@@ -9,7 +9,8 @@ public class FileUtils {
   public static String loadAsString(String path) {
     StringBuilder res = new StringBuilder();
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream(path)));
+      // Change class to FileUtils in order to work when we package to a .jar
+      BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtils.class.getResourceAsStream(path)));
       String line = null;
       // Parse string to res
       while ((line = reader.readLine()) != null) {

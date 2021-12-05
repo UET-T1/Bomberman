@@ -60,7 +60,7 @@ public class Window {
     //Set default callbacks for Input object
     setCallback();
 
-    // Make opengl context current
+    // Make graphic context current
     GLFW.glfwShowWindow(window);
 
     // Enable vsync to avoid screen tearing

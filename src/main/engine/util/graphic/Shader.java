@@ -1,6 +1,5 @@
-package main.engine.util.opengl;
+package main.engine.util.graphic;
 
-import java.io.File;
 import main.engine.util.io.FileUtils;
 import org.lwjgl.opengl.GL33;
 
