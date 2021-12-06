@@ -1,11 +1,9 @@
 package main.engine.util.math;
-
 import java.nio.FloatBuffer;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 /**
  * This class represents a 4x4-Matrix. GLSL equivalent to mat4.
+ *
  */
 public class Matrix4f {
 
@@ -29,7 +27,8 @@ public class Matrix4f {
      * @param col3 Vector with values of the third column
      * @param col4 Vector with values of the fourth column
      */
-    public Matrix4f(Vector4f col1, Vector4f col2, Vector4f col3, Vector4f col4) {
+    public Matrix4f(
+        engine.maths.Vector4f col1, engine.maths.Vector4f col2, engine.maths.Vector4f col3, engine.maths.Vector4f col4) {
         m00 = col1.x;
         m10 = col1.y;
         m20 = col1.z;
@@ -167,12 +166,12 @@ public class Matrix4f {
      *
      * @return Vector product of this * other
      */
-    public Vector4f multiply(Vector4f vector) {
+    public engine.maths.Vector4f multiply(engine.maths.Vector4f vector) {
         float x = this.m00 * vector.x + this.m01 * vector.y + this.m02 * vector.z + this.m03 * vector.w;
         float y = this.m10 * vector.x + this.m11 * vector.y + this.m12 * vector.z + this.m13 * vector.w;
         float z = this.m20 * vector.x + this.m21 * vector.y + this.m22 * vector.z + this.m23 * vector.w;
         float w = this.m30 * vector.x + this.m31 * vector.y + this.m32 * vector.z + this.m33 * vector.w;
-        return new Vector4f(x, y, z, w);
+        return new engine.maths.Vector4f(x, y, z, w);
     }
 
     /**
@@ -421,4 +420,37 @@ public class Matrix4f {
         return scaling;
     }
 
+    /**
+     * Transform a matrix
+     * @param position
+     * @param rotation
+     * @param scale
+     * @return
+     */
+    public static Matrix4f transform(Vector3f position, Vector3f rotation, Vector3f scale) {
+        Matrix4f result = new Matrix4f();
+
+        Matrix4f translationMatrix = Matrix4f.translate(position.x, position.y, position.z);
+        Matrix4f rotateX = Matrix4f.rotate(rotation.x, 1,0,0);
+        Matrix4f rotateY = Matrix4f.rotate(rotation.y, 0,1,0);
+        Matrix4f rotateZ = Matrix4f.rotate(rotation.z, 0,0,1);
+        Matrix4f scaleMatrix = Matrix4f.scale(scale.x, scale.y, scale.z);
+
+        Matrix4f rotationMatrix = rotateX.multiply(rotateY.multiply(rotateZ)); // = rotateX * rotateY * rotateZ
+        result = translationMatrix.multiply(rotationMatrix.multiply(scaleMatrix));
+        return result;
+    }
+
+    public static Matrix4f viewMatrix(Vector3f position, Vector3f rotation) {
+        Matrix4f result = new Matrix4f();
+
+        Matrix4f translationMatrix = Matrix4f.translate(-position.x, -position.y, -position.z);
+        Matrix4f rotateX = Matrix4f.rotate(rotation.x, 1,0,0);
+        Matrix4f rotateY = Matrix4f.rotate(rotation.y, 0,1,0);
+        Matrix4f rotateZ = Matrix4f.rotate(rotation.z, 0,0,1);
+
+        Matrix4f rotationMatrix = rotateZ.multiply(rotateY.multiply(rotateX)); // = rotateZ * rotateY * rotateX: order matters
+        result = translationMatrix.multiply(rotationMatrix);
+        return result;
+    }
 }

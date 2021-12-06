@@ -1,85 +1,104 @@
 package main.engine.util.graphic;
 
+import main.engine.util.math.*;
+import main.engine.util.math.*;
 import main.engine.util.io.FileUtils;
-import org.lwjgl.opengl.GL33;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.system.MemoryUtil;
 
-/**
- * Shader object runs on GPU, manipulates game objects and show it on screen.
- */
+import static org.lwjgl.opengl.GL33.*;
+
 public class Shader {
-  // Mesh is created with vertices. To draw vertices, we use Vertex Shader (described in vertexFile).
-  // To draw the area of that geometric object (made by these vertices), we use Fragment Shader
-  // or Pixel Shader (described in fragmentFile).
-  private String vertexFile;
-  private String fragmentFile;
+  private String vertexFile, fragmentFile;
+  private int programID, vertexID, fragmentID;
 
-  // Pointer to vertex shader
-  private int vertexID;
-  // Pointer to fragment shader
-  private int fragmentID;
-  // Pointer to current program
-  private int programID;
-
-  public Shader(String vertexGLSL, String fragmentGLSL) {
-    vertexFile = FileUtils.loadAsString(vertexGLSL);
-    fragmentFile = FileUtils.loadAsString(fragmentGLSL);
+  public Shader(String vertexPath, String fragmentPath) throws Exception {
+    vertexFile = FileUtils.loadResource(vertexPath);
+    fragmentFile = FileUtils.loadResource(fragmentPath);
   }
 
   public void create() {
-    programID = GL33.glCreateProgram();
-    vertexID = GL33.glCreateShader(GL33.GL_VERTEX_SHADER);
+    programID = glCreateProgram();
+    vertexID = glCreateShader(GL_VERTEX_SHADER);
+    fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Binding vertex shader
-    GL33.glShaderSource(vertexID, vertexFile);
-    GL33.glCompileShader(vertexID);
+    // Set the source code to shaders
+    glShaderSource(vertexID, vertexFile);
+    glShaderSource(fragmentID, fragmentFile);
 
-    if (GL33.glGetShaderi(vertexID, GL33.GL_COMPILE_STATUS) == GL33.GL_FALSE) {
-      System.err.println("Vertex shader err: " + GL33.glGetShaderInfoLog(vertexID));
+    // Compile shaders
+    glCompileShader(vertexID);
+    glCompileShader(fragmentID);
+
+    // Check compilation
+    if (glGetShaderi(vertexID, GL_COMPILE_STATUS) == GL_FALSE || glGetShaderi(fragmentID, GL_COMPILE_STATUS) == GL_FALSE) {
+      System.err.println("Shader compilation err: \n" + glGetShaderInfoLog(vertexID) + "\n" + glGetShaderInfoLog(fragmentID));
       return;
     }
 
-    // Binding fragment shader
-    GL33.glShaderSource(fragmentID, fragmentFile);
-    GL33.glCompileShader(fragmentID);
+    // Attach to program
+    glAttachShader(programID, vertexID);
+    glAttachShader(programID, fragmentID);
 
-    if (GL33.glGetShaderi(fragmentID, GL33.GL_COMPILE_STATUS) == GL33.GL_FALSE) {
-      System.err.println("Fragment shader err: " + GL33.glGetShaderInfoLog(fragmentID));
+    // Link to gpu
+    glLinkProgram(programID);
+
+    // check linking
+    if (glGetProgrami(programID, GL_LINK_STATUS) == GL_FALSE) {
+      System.err.println("Program linking err: " + glGetProgramInfoLog(programID));
       return;
     }
 
-    // Attach to current program
-    GL33.glAttachShader(programID, vertexID);
-    GL33.glAttachShader(programID, fragmentID);
-
-    // Link to gpu to use those shaders
-    GL33.glLinkProgram(programID);
-
-    if (GL33.glGetProgrami(programID, GL33.GL_LINK_STATUS) == GL33.GL_FALSE) {
-      System.err.println("Linking fail: " + GL33.glGetProgramInfoLog(programID));
+    // validate
+    glValidateProgram(programID);
+    if (glGetProgrami(programID, GL_VALIDATE_STATUS) == GL_FALSE) {
+      System.err.println("Program validation err: " + glGetProgramInfoLog(programID));
       return;
     }
 
-    // Checks to see whether the executables contained in program can execute given the current OpenGL state
-    GL33.glValidateProgram(programID);
-    if (GL33.glGetProgrami(programID, GL33.GL_VALIDATE_STATUS) == GL33.GL_FALSE) {
-      System.err.println("Validation fail: " + GL33.glGetProgramInfoLog(programID));
-      return;
-    }
-
-    // After binding those shaders to program object, release them
-    GL33.glDeleteShader(vertexID);
-    GL33.glDeleteShader(fragmentID);
   }
 
   public void bind() {
-    GL33.glUseProgram(programID);
+    glUseProgram(programID);
   }
 
   public void unbind() {
-    GL33.glUseProgram(0);
+    glUseProgram(0);
   }
 
   public void destroy() {
-    GL33.glDeleteProgram(programID);
+    glDetachShader(programID, vertexID);
+    glDetachShader(programID, fragmentID);
+    glDeleteShader(vertexID);
+    glDeleteShader(fragmentID);
+    glDeleteProgram(programID);
+  }
+
+  public int getUniformLocation(String name) {
+    return GL20.glGetUniformLocation(programID, name);
+  }
+
+  // 6 prototypes
+  public void setUniform(String name, float value) {
+    GL20.glUniform1f(getUniformLocation(name), value);
+  }
+  public void setUniform(String name, int value) {
+    GL20.glUniform1i(getUniformLocation(name), value);
+  }
+  public void setUniform(String name, Vector2f value) {
+    GL20.glUniform2f(getUniformLocation(name), value.x, value.y);
+  }
+  public void setUniform(String name, Vector3f value) {
+    GL20.glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
+  }
+  public void setUniform(String name, Matrix4f value) {
+    FloatBuffer buffer = MemoryUtil.memAllocFloat(4 * 4); // 4x4 matrix
+    value.toBuffer(buffer);
+    GL20.glUniformMatrix4fv(getUniformLocation(name), true, buffer);
+  }
+  public void setUniform(String name, boolean value) {
+    GL20.glUniform1i(getUniformLocation(name), value ? 1:0);
   }
 }
