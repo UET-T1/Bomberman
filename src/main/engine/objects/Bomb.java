@@ -91,6 +91,7 @@ public class Bomb extends GameObject{
 
     //"BOOM" function to break the broken wall or people
     public void boom() {
+        ObjectManager.soundMgr.playSoundSource("BOOM");
         isShow = false;
         boomCenter();
         boomRight();

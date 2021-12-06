@@ -23,7 +23,7 @@ public class Oneal extends GameObject implements Movable{
     
     public Oneal(Mesh mesh) {
         super(mesh);
-        isDead = false;
+        isDead = true;
         chaseStat = false;
     }
 

@@ -21,7 +21,7 @@ public class Balloom extends GameObject implements Movable{
     
     public Balloom(Mesh mesh) {
         super(mesh);
-        isDead = false;
+        isDead = true;
         chaseStat = false;
         nextPosition = null;
     }

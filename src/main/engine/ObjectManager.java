@@ -9,6 +9,7 @@ import java.util.Queue;
 import org.joml.Vector3f;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.lwjgl.openal.AL11;
 
 import main.engine.objects.Balloom;
 import main.engine.objects.Bomb;
@@ -20,6 +21,10 @@ import main.engine.objects.Grass;
 import main.engine.objects.Item;
 import main.engine.objects.Oneal;
 import main.engine.objects.Wall;
+import main.engine.sound.SoundBuffer;
+import main.engine.sound.SoundListener;
+import main.engine.sound.SoundManager;
+import main.engine.sound.SoundSource;
 import main.engine.testGUI.Mesh;
 import main.engine.testGUI.Texture;
 
@@ -30,10 +35,10 @@ public class ObjectManager {
     public static Flame[][] tileFlame;
     public static Item[][] tileItem;
     public static Player player1;
-    public static Player player2;
     public static Balloom[] balloom;
     public static Oneal[] oneal;
     public static Gate gate;
+    public static Player[] humanEnemy;
 
     public static int width;
     public static int height;
@@ -47,6 +52,8 @@ public class ObjectManager {
     public final static int BOMB = 1;
     public final static int SPEED = 2;
     public final static int POWER = 3;
+
+    public static SoundManager soundMgr;
 
     public static void createMap(String path) throws Exception {
         // Create the Mesh
@@ -122,6 +129,7 @@ public class ObjectManager {
         tileItem = new Item[width + 1][height + 1];
         oneal = new Oneal[0];
         balloom = new Balloom[0];
+        humanEnemy = new Player[0];
 
         JSONArray array = obj.getJSONArray("map");
         for (int y = height; y >= 1; --y) {
@@ -192,6 +200,16 @@ public class ObjectManager {
                     oneal[oneal.length - 1].setPosition(x, y, 0);
                 }
 
+                if (s.charAt(x - 1) == '6') {
+                    Player[] newHumanEnemy = new Player[humanEnemy.length + 1];
+                    for (int i = 0; i < humanEnemy.length; ++i) {
+                        newHumanEnemy[i] = humanEnemy[i];
+                    }
+                    humanEnemy = newHumanEnemy;
+                    humanEnemy[humanEnemy.length - 1] = new Player(player1Mesh);
+                    humanEnemy[humanEnemy.length - 1].setPosition(x, y, 0);
+                }
+
                 if (s.charAt(x - 1) == 'e') {
                     gate = new Gate(gateMesh);
                     gate.setPosition(x, y, 0);
@@ -200,7 +218,24 @@ public class ObjectManager {
             
             durationTimeBomb = 2.0f;
             durationTimeFlame = 0.5f;
+
+            soundMgr = new SoundManager();
+            soundMgr.init();
+            soundMgr.setAttenuationModel(AL11.AL_EXPONENT_DISTANCE);
+            setupSounds();
         }
+    }
+
+    public static void setupSounds() throws Exception {
+
+        SoundBuffer bombSound = new SoundBuffer("src/main/engine/testGUI/bombsound.ogg");
+        soundMgr.addSoundBuffer(bombSound);
+        SoundSource sourceBeep = new SoundSource(false, true);
+        sourceBeep.setBuffer(bombSound.getBufferId());
+        soundMgr.addSoundSource("BOOM", sourceBeep);
+        
+        
+        soundMgr.setListener(new SoundListener(new Vector3f()));
     }
 
     // Tile Map function
@@ -228,6 +263,7 @@ public class ObjectManager {
 
     public static void startABomb(int x, int y, int power) {
         tileBomb[x][y].start(power);
+        setUpBomb();
     }
 
     public static Bomb getBomb(int x, int y) {
@@ -486,12 +522,10 @@ public class ObjectManager {
             }
         }
         for (int i = 0; i < tileFlame[cx][cy].timeToBoom.length; ++i) {
-            if (timeToReach + timeSquare <= durationTimeBomb - tileFlame[cx][cy].timeToBoom[i] + durationTimeFlame
-                    && timeToReach >= durationTimeBomb - tileFlame[cx][cy].timeToBoom[i]) {
-                return true;
-            }
-            if (timeToReach - timeSquare <= durationTimeBomb - tileFlame[cx][cy].timeToBoom[i] + durationTimeFlame
-                    && timeToReach >= durationTimeBomb - tileFlame[cx][cy].timeToBoom[i]) {
+            if (timeToReach + timeSquare < durationTimeBomb - tileFlame[cx][cy].timeToBoom[i]
+                || timeToReach - timeSquare > durationTimeBomb - tileFlame[cx][cy].timeToBoom[i] + durationTimeFlame) {
+                return false;
+            } else {
                 return true;
             }
         }
@@ -522,6 +556,7 @@ public class ObjectManager {
         }
 
         tileBomb[x][y].start(power);
+        setUpBomb();
         Queue<Pair> queue = new LinkedList<>();
         queue.add(new Pair(x, y));
 
@@ -583,6 +618,7 @@ public class ObjectManager {
     }
 
     public static Pair findSafePos(int x, int y, float timeSquare) {
+
         boolean[][] checked = new boolean[width + 1][height + 1];
         for (int i = 1; i <= width; ++i) {
             for (int j = 1; j <= height; ++j) {
@@ -594,6 +630,9 @@ public class ObjectManager {
 
         Pair newPair = new Pair(x, y);
         queue.add(newPair);
+        if (isPotential(x, y, x, y, timeSquare, 0.0f)) {
+            return newPair;
+        }
 
         while (!queue.isEmpty()) {
 

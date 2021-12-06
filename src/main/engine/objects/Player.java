@@ -1,5 +1,6 @@
 package main.engine.objects;
 
+import java.sql.Time;
 import java.util.PriorityQueue;
 
 import org.joml.Vector3f;
@@ -12,6 +13,7 @@ import main.engine.Node;
 import main.engine.ObjectManager;
 import main.engine.Pair;
 import main.engine.Renderer;
+import main.engine.Timer;
 import main.engine.Util;
 import main.engine.Window;
 import main.engine.testGUI.Mesh;
@@ -27,6 +29,8 @@ public class Player extends GameObject implements Movable, Auto {
     private final int GOTOSAFEPOS = 0;//BREAKWALL status for findWay function
 
     private final int FIND = 2;
+
+    private final int STAY = 3;
 
     private int status;// status to break wall or search the way
 
@@ -46,6 +50,8 @@ public class Player extends GameObject implements Movable, Auto {
 
     protected String chaseDiection = "";// chase direction  
     protected int dem = 0;// the number of step to go full one square
+
+    private Timer time = new Timer();
     
     public Player(Mesh mesh) {
         super(mesh);
@@ -53,7 +59,7 @@ public class Player extends GameObject implements Movable, Auto {
         bombsOfMe = new Bomb[1];
         bombPower = 1;
         isDead = false;
-        status = 2;
+        status = FIND;
         isInBomb = false;
         targetPosition = new Vector3f(8,8,0);
     }
@@ -214,10 +220,19 @@ public class Player extends GameObject implements Movable, Auto {
                 Util.round1(getPosition());
                 nextPosition = null;
                 if (search()) {
-                    status = FIND;
+                    if (status != FIND) {
+                        if (time.getTime() - time.getLastLoopTime() > 2.7f) status = FIND;
+                        else status = STAY;
+                    }
                 } else {
-                    if (!isFullBomb()) findBrick();
-                    else findSafePos();
+                    if (!isFullBomb()) {
+                        if (time.getTime() - time.getLastLoopTime() > 2.7f)findBrick();
+                        else findSafePos();
+                    }
+                    else {
+                        time.init();
+                        findSafePos();
+                    }
                 }
             }
         }
@@ -513,11 +528,15 @@ public class Player extends GameObject implements Movable, Auto {
             }
         }
 
+        time.init();
         findSafePos();
     }
 
     @Override
     public void chase() {
+        if (status == STAY) {
+            return;
+        }
         if (nextPosition != null) {
 
             Vector3f currentPosition = getPosition();
