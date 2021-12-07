@@ -1,0 +1,69 @@
+{
+    "name": "Stage 2, Level 10 - Peninsulas",
+	"img": "bomberman-assets/imgs/levels/level-09.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 30,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
+        { "0": "wp_    bbbbbbbbw", "1": "w      wwwwwwwww" },
+        { "0": "w__b b    ccbbbw", "1": "w           wwww" },
+        { "0": "wcc fb 4  ccebbw", "1": "w            www" },
+        { "0": "w  c      bbbbbw", "1": "w         wwwwww" },
+        { "0": "w   bbbbbbb   bw", "1": "w             ww" },
+        { "0": "wc  bbb      0cw", "1": "w              w" },
+        { "0": "wf1 bbb 2c   bfw", "1": "w            w w" },
+        { "0": "w  cbbb bfb  bbw", "1": "w            www" },
+        { "0": "w     c bbb b  w", "1": "w              w" },
+        { "0": "w   4f         w", "1": "w              w" },
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 10,
+            "nb": 2
+        },
+        "bombs": {
+            "chance": 15,
+            "nb": 1
+        },
+        "flames": {
+            "chance": 10,
+            "nb": 1
+        },
+        "bombpass": {
+            "chance": 8,
+            "nb": 1
+        },
+        "shield": {
+            "chance": 5,
+            "nb": 2
+        },
+        "time": {
+            "chance": 8,
+            "nb": 2
+        },
+        "points": {
+            "chance": 8,
+            "nb": -1
+        }
+    }
+}

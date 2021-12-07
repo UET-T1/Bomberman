@@ -1,0 +1,69 @@
+{
+    "name": "Stage 2, Level 14",
+	"img": "bomberman-assets/imgs/levels/level-13.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 40,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
+        { "0": "wc  f5  c  b __w", "1": "w              w" },
+        { "0": "w  b b b   b bpw", "1": "w              w" },
+        { "0": "w  b b b  c cbbw", "1": "w              w" },
+        { "0": "w   c     b   2w", "1": "w              w" },
+        { "0": "w bbbbbbb bbbbbw", "1": "w              w" },
+        { "0": "wcbf    b      w", "1": "w              w" },
+        { "0": "w     b    b   w", "1": "w              w" },
+        { "0": "w bbb b bbbb bbw", "1": "w              w" },
+        { "0": "w b b b bfb  bew", "1": "w              w" },
+        { "0": "w  c   c 4    cw", "1": "w              w" },
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 2,
+            "nb": 1
+        },
+        "bombs": {
+            "chance": 15,
+            "nb": 2
+        },
+        "flames": {
+            "chance": 10,
+            "nb": 2
+        },
+        "speed": {
+            "chance": 10,
+            "nb": 2
+        },
+        "shield": {
+            "chance": 5,
+            "nb": 1
+        },
+        "time": {
+            "chance": 20,
+            "nb": 1
+        },
+        "points": {
+            "chance": 8,
+            "nb": -1
+        }
+    }
+}

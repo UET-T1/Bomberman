@@ -19,9 +19,9 @@ public class Item extends GameItem {
       1.0f, 1.0f,
       0.0f, 1.0f};
   private Texture[] textures = {
-      new Texture("src/main/engine/testGUI/bombItem.jpg"),
-      new Texture("src/main/engine/testGUI/speedItem.jpg"),
-      new Texture("src/main/engine/testGUI/powerItem.jpg")
+      new Texture("resources/textures/bombItem.jpg"),
+      new Texture("resources/textures/speedItem.jpg"),
+      new Texture("resources/textures/powerItem.jpg")
   };
   private int function;
   private boolean visible;

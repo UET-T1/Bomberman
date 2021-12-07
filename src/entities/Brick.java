@@ -15,7 +15,7 @@ public class Brick extends GameItem {
 
   protected boolean visible;//is item visible?
 
-  private Texture brickTexture = new Texture("src/main/engine/testGUI/grassblock.png");
+  private Texture brickTexture = new Texture("resources/textures/grassblock.png");
 
   {
 

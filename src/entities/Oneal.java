@@ -20,7 +20,7 @@ public class Oneal extends GameItem implements Movable {
   private boolean chaseStat;
   private Vector3f targetPosition;
 
-  private Texture onealTexture = new Texture("src/main/engine/testGUI/oneal.jpg");
+  private Texture onealTexture = new Texture("resources/textures/oneal.jpg");
 
   {
     textCoords = new float[]{

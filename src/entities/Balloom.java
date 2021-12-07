@@ -17,7 +17,7 @@ public class Balloom extends GameItem implements Movable {
   private boolean isDead;
   private boolean chaseStat;
   private Vector3f nextPosition;
-  private Texture balloomTexture = new Texture("src/main/engine/testGUI/balloom.jpg");
+  private Texture balloomTexture = new Texture("resources/textures/balloom.jpg");
 
   {
 
