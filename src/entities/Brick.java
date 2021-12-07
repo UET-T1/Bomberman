@@ -15,17 +15,22 @@ public class Brick extends GameItem {
 
   protected boolean visible;//is item visible?
 
-  private Texture brickTexture = new Texture("resources/textures/grassblock.png");
+  private static Texture brickTexture;
 
-  {
-
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, brickTexture);
+  static {
+    try {
+      brickTexture = new Texture("resources/textures/grassblock.png");
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      mesh = new Mesh(positions, textCoords, indices, brickTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Brick(Mesh mesh) throws Exception {
     super(mesh);

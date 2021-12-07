@@ -10,16 +10,22 @@ import engine.graphics.Texture;
 
 public class Wall extends GameItem {
 
-  private Texture wallTexture = new Texture("resources/textures/square.jpg");
+  private static Texture wallTexture;
 
-  {
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        5.0f, 0.0f,
-        0.5f, 0.5f,
-        0.0f, 0.5f};
-    mesh = new Mesh(positions, textCoords, indices, wallTexture);
+  static {
+    try {
+      wallTexture = new Texture("resources/textures/square.jpg");
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          5.0f, 0.0f,
+          0.5f, 0.5f,
+          0.0f, 0.5f};
+      mesh = new Mesh(positions, textCoords, indices, wallTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Wall() throws Exception {
     super();

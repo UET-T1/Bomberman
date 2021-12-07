@@ -30,11 +30,34 @@ public class Player extends GameItem implements Movable, Auto {
   private final int GOTOSAFEPOS = 0;//BREAKWALL status for findWay function
   private final int FIND = 2;
   private final int STAY = 3;
-  public Map<String, Integer> characters = new HashMap<>();
-  public Texture[] textures = {
-      new Texture("resources/textures/capA.png"),
-      new Texture("resources/textures/deadpool.png")
-  };
+  public static Map<String, Integer> characters = new HashMap<>();
+  private static Mesh[] meshes;
+  static {
+    characters.put("Captain", 0);
+    characters.put("Deadpool", 1);
+  }
+  public static Texture[] textures;
+
+  static {
+    try {
+      textures = new Texture[]{
+          new Texture("resources/textures/capA.png"),
+          new Texture("resources/textures/deadpool.png")
+      };
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      meshes = new Mesh[] {
+          new Mesh(positions, textCoords, indices, textures[0]),
+          new Mesh(positions, textCoords, indices, textures[1])
+      };
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   protected Vector3f targetPosition;// target position
   protected String chaseDiection = "";// chase direction
   protected int dem = 0;// the number of step to go full one square
@@ -47,16 +70,8 @@ public class Player extends GameItem implements Movable, Auto {
   private Bomb inBomb;// bomb in leg of object
   private int bombPower;
   private Timer time = new Timer();
-  private float[] textCoords = new float[]{
-      0.0f, 0.0f,
-      1.0f, 0.0f,
-      1.0f, 1.0f,
-      0.0f, 1.0f};
 
-  {
-    characters.put("Captain", 0);
-    characters.put("Deadpool", 1);
-  }
+
 
   public Player(Mesh mesh) throws Exception {
     super(mesh);
@@ -71,8 +86,7 @@ public class Player extends GameItem implements Movable, Auto {
 
   public Player(String character) throws Exception {
     super();
-    Texture temp = textures[characters.get(character)];
-    mesh = new Mesh(positions, textCoords, indices, temp);
+    mesh = meshes[characters.get(character)];
     autoMode = false;
     bombsOfMe = new Bomb[1];
     bombPower = 1;

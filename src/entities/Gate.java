@@ -10,16 +10,22 @@ import engine.graphics.Texture;
 
 public class Gate extends GameItem {
 
-  private Texture gateTexture = new Texture("resources/textures/gate.jpg");
+  private static Texture gateTexture;
 
-  {
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, gateTexture);
+  static {
+    try {
+      gateTexture = new Texture("resources/textures/gate.jpg");
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      mesh = new Mesh(positions, textCoords, indices, gateTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Gate(Mesh mesh) throws Exception {
     super(mesh);

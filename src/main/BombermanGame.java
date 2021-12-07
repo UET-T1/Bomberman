@@ -79,10 +79,10 @@ public class BombermanGame implements IGameLogic {
       if (!ObjectManager.checkCollision(player1.getPosition().x, player1.getPosition().y,
           gate.getPosition().x, gate.getPosition().y)) {
         dem++;
-        createMap("src/resources/map/level" + (int) (dem / 10) + (dem % 10) + ".json");
+        createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
       }
     } else {
-      createMap("src/resources/map/level" + (int) (dem / 10) + (dem % 10) + ".json");
+      createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
     }
     //camera.setPosition(width/2 + 1, height/2 + 10, Math.max(width, height)); //Math.max(width, height)
     //camera.setPosition(5.0f, 5.0f, 100f);

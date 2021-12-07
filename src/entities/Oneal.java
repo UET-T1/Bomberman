@@ -20,15 +20,20 @@ public class Oneal extends GameItem implements Movable {
   private boolean chaseStat;
   private Vector3f targetPosition;
 
-  private Texture onealTexture = new Texture("resources/textures/oneal.jpg");
+  private static Texture onealTexture;
 
-  {
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, onealTexture);
+  static {
+    try {
+      onealTexture = new Texture("resources/textures/oneal.jpg");
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      mesh = new Mesh(positions, textCoords, indices, onealTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public Oneal() throws Exception {
