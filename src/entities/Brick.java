@@ -16,6 +16,7 @@ public class Brick extends GameItem {
   protected boolean visible;//is item visible?
 
   private static Texture brickTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -38,8 +39,7 @@ public class Brick extends GameItem {
   }
 
   public Brick() throws Exception {
-    super();
-    visible = true;
+    this(mesh);
   }
 
   public boolean getVisible() {

@@ -8,7 +8,7 @@ import org.joml.Vector3f;
 public abstract class GameItem implements Observable, Collidable {
 
   protected final Vector3f position;
-  protected static Mesh mesh;
+  protected Mesh meshItem;
   protected float scale;
 
   protected Vector3f rotation;
@@ -23,18 +23,18 @@ public abstract class GameItem implements Observable, Collidable {
       0, 1, 3, 3, 1, 2};
   protected static float[] positions = new float[]{
       // V0
-      1.0f, -1.0f, 1.0f,
+      1.0f, -1.0f, 0.0f,
       // V1
-      1.0f, 0.0f, 1.0f,
+      1.0f, 0.0f, 0.0f,
       // V2
-      0.0f, 0.0f, 1.0f,
+      0.0f, 0.0f, 0.0f,
       // V3
-      0.0f, -1.0f, 1.0f};
+      0.0f, -1.0f, 0.0f};
 
   protected static float[] textCoords;
 
   public GameItem(Mesh mesh) {
-    this.mesh = mesh;
+    this.meshItem = mesh;
     position = new Vector3f();
     scale = 1;
     rotation = new Vector3f();
@@ -75,11 +75,11 @@ public abstract class GameItem implements Observable, Collidable {
   }
 
   public Mesh getMesh() {
-    return mesh;
+    return meshItem;
   }
 
   public void setMesh(Mesh mesh) {
-    this.mesh = mesh;
+    this.meshItem = mesh;
   }
 
   @Override

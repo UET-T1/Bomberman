@@ -15,6 +15,7 @@ public class Item extends GameItem {
   public int type;
   private static Texture[] textures;
   private static Mesh[] meshes;
+  private static Mesh mesh;
   static {
     try {
       textures = new Texture[]{
@@ -47,10 +48,7 @@ public class Item extends GameItem {
   }
 
   public Item(int type) throws Exception {
-    super();
-    mesh = meshes[type];
-    visible = false;
-    this.function = type + 1;
+    this(mesh, type + 1);
   }
 
   @Override

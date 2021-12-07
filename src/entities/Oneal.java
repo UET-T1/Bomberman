@@ -21,6 +21,7 @@ public class Oneal extends GameItem implements Movable {
   private Vector3f targetPosition;
 
   private static Texture onealTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -37,9 +38,7 @@ public class Oneal extends GameItem implements Movable {
   }
 
   public Oneal() throws Exception {
-    super();
-    isDead = true;
-    chaseStat = false;
+    this(mesh);
   }
 
   public Oneal(Mesh mesh) throws Exception {

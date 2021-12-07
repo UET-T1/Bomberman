@@ -11,7 +11,7 @@ import engine.graphics.Texture;
 public class Grass extends GameItem {
 
   private static Texture grassTexture;
-
+  private static Mesh mesh;
   static {
     try {
       grassTexture = new Texture("resources/textures/grassblock.png");
@@ -28,7 +28,7 @@ public class Grass extends GameItem {
 
 
   public Grass() throws Exception {
-    super();
+    this(mesh);
   }
 
   public Grass(Mesh mesh) throws Exception {

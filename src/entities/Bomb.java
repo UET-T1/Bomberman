@@ -20,6 +20,7 @@ public class Bomb extends GameItem {
   private float timeToBoom;// acuracy time to "BOOM"
   private boolean isShow;
   private static Texture bombTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -46,12 +47,7 @@ public class Bomb extends GameItem {
   }
 
   public Bomb(float durationTime) throws Exception {
-    super();
-    time = new Timer();
-    power = 1;
-    this.durationTime = durationTime;
-    isStart = false;
-    isShow = false;
+    this(mesh, durationTime);
   }
 
   public Bomb(Bomb bomb) throws Exception {
