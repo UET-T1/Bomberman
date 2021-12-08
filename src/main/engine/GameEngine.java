@@ -3,7 +3,7 @@ package main.engine;
 // class GameEngine contatin and processing game loop
 public class GameEngine implements Runnable {
 
-    public static final int TARGET_FPS = 75;
+    public static final int TARGET_FPS = 60;
 
     public static final int TARGET_UPS = 30;
 
@@ -42,13 +42,18 @@ public class GameEngine implements Runnable {
     }
 
     // Fixed Step Game Loop
-    protected void gameLoop() {
+    protected void gameLoop() throws Exception {
         float elapsedTime;
         float accumulator = 0f;
-        float interval = 1f / TARGET_UPS;
+        float interval = 1f / TARGET_FPS;
+
 
         boolean running = true;
         while (running && !window.isClose()) {
+
+            // Timer time = new Timer();
+            // time.init();
+
             elapsedTime = timer.getTimeElapsed();
             accumulator += elapsedTime;
 
@@ -60,6 +65,10 @@ public class GameEngine implements Runnable {
             }
 
             render();
+
+            // System.out.println(time.getTime() - time.getLastLoopTime());
+            // System.out.println((1.0f/60));
+            // System.out.println();
         }
     }
 
@@ -67,7 +76,7 @@ public class GameEngine implements Runnable {
         gameLogic.destroy();                
     }
 
-    protected void input() {
+    protected void input() throws Exception {
         gameLogic.input(window, input);
     }
 

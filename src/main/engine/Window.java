@@ -124,11 +124,7 @@ public class Window {
   public int getHeight() {
     return height;
   }
-
-  public boolean isKeyDown(int keyCode) {
-    return GLFW.glfwGetKey(window, keyCode) == GLFW.GLFW_PRESS;
-  }
-
+  
   public Input getInputObj() {
     return input;
   }

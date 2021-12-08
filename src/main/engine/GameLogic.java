@@ -5,7 +5,7 @@ package main.engine;
  */
 public interface GameLogic {
   void create(Window window) throws Exception;
-  void input(Window window, Input input);
+  void input(Window window, Input input) throws Exception;
   // update after each interval
   void update(float interval, Input input, Window window);
   void render(Window window);
