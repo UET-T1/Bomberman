@@ -15,7 +15,7 @@ public class Wall extends GameItem {
 
   static {
     try {
-      wallTexture = new Texture("resources/textures/wall1.png");
+      wallTexture = new Texture("resources/textures/wall.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
