@@ -68,8 +68,8 @@ public class BombermanGame implements IGameLogic {
   @Override
   public void init(Window window) throws Exception {
     renderer.init(window, camera);
-    createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + "0.json");
-    camera.setPosition(width / 2, height / 2, Math.max(width, height));
+    createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+    camera.setPosition((float)width / 2, (float)height / 2, Math.max(width, height));
   }
 
   @Override
@@ -168,6 +168,7 @@ public class BombermanGame implements IGameLogic {
 
   @Override
   public void render(Window window) {
+
     renderer.render(window, camera, null, null);
     for (Bomb[] bombs : tileBomb) {
       for (Bomb bomb : bombs) {
@@ -284,6 +285,7 @@ public class BombermanGame implements IGameLogic {
     if (player1 != null) {
       player1.getMesh().cleanUp();
     }
+    if (humanEnemy != null)
     for (int i = 0; i < humanEnemy.length; ++i) {
       if (!humanEnemy[i].isDead()) {
         humanEnemy[i].getMesh().cleanUp();

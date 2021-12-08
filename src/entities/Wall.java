@@ -15,12 +15,12 @@ public class Wall extends GameItem {
 
   static {
     try {
-      wallTexture = new Texture("resources/textures/square.jpg");
+      wallTexture = new Texture("resources/textures/wall1.png");
       textCoords = new float[]{
           0.0f, 0.0f,
-          5.0f, 0.0f,
-          0.5f, 0.5f,
-          0.0f, 0.5f};
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
       mesh = new Mesh(positions, textCoords, indices, wallTexture);
     } catch (Exception e) {
       e.printStackTrace();

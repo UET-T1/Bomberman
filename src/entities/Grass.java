@@ -14,7 +14,7 @@ public class Grass extends GameItem {
   private static Mesh mesh;
   static {
     try {
-      grassTexture = new Texture("resources/textures/grassblock.png");
+      grassTexture = new Texture("resources/textures/grass1.png");
       textCoords = new float[]{
           0.0f, 0.5f,
           0.5f, 0.5f,
