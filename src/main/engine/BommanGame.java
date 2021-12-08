@@ -86,32 +86,32 @@ public class BommanGame implements GameLogic {
         for (Bomb[] bombs : tileBomb) {
             for (Bomb bomb : bombs) {
                 if (bomb.isShow()) {
-                    renderer.render(bomb);
+                    bomb.render(renderer);
                 }
             }
         }
         for (Flame[] flames : tileFlame) {
             for (Flame flame : flames) {
                 if (flame.isStart()) {
-                    renderer.render(flame);
+                    flame.render(renderer);
                 }
             }
         }
         if (!player1.isDead())
-            renderer.render(player1);
+            player1.render(renderer);
         if (!player2.isDead())
-            renderer.render(player2);
+            player2.render(renderer);
         
         for (Brick[] bricks : tileBrick) {
             for (Brick brick : bricks) {
                 if (brick.getVisible()) {
-                    renderer.render(brick);
+                    brick.render(renderer);
                 }
             }
         }
         for (GameObject[] gameObjects : tileMap) {
             for (GameObject gameObject : gameObjects) {
-                renderer.render(gameObject);
+                gameObject.render(renderer);
             }
         }
         renderer.finishRender();
