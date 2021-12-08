@@ -2,6 +2,12 @@ package engine;
 
 public class Timer {
 
+  /*
+  public Timer() {
+    init();
+  }
+   */
+
   private double lastLoopTime;
 
   public void init() {
