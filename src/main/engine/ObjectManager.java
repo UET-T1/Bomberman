@@ -9,7 +9,7 @@ import org.joml.Vector3f;
 
 import main.engine.objects.Bomb;
 import main.engine.objects.Brick;
-import main.engine.objects.Deadpool;
+import main.engine.objects.Player;
 import main.engine.objects.Flame;
 import main.engine.objects.Grass;
 import main.engine.objects.Wall;
@@ -21,8 +21,8 @@ public class ObjectManager {
     public static Brick[][] tileBrick;
     public static Bomb[][] tileBomb;
     public static Flame[][] tileFlame;
-    public static Deadpool deadpool;
-    public static Deadpool deadpool2;
+    public static Player player1;
+    public static Player player2;
     public static int width;
     public static int height;
     public static float durationTimeBomb;
@@ -44,7 +44,7 @@ public class ObjectManager {
                 1.0f, 0.0f,
                 1.0f, 1.0f,
                 0.0f, 1.0f };
-        float[] textCoordsOfBrokenWall = new float[]{
+        float[] textCoordsOfBrick = new float[]{
                 0.5f, 0.0f,
                 1.0f, 0.0f,
                 1.0f, 0.5f,
@@ -54,7 +54,7 @@ public class ObjectManager {
                 0.5f, 0.5f,
                 0.5f, 1.0f,
                 0.0f, 1.0f };
-        float[] textCoordsOfDeadpool = new float[]{
+        float[] textCoordsOfPlayer = new float[]{
                 0.0f, 0.0f,
                 1.0f, 0.0f,
                 1.0f, 1.0f,
@@ -69,16 +69,18 @@ public class ObjectManager {
 
         Texture grassTexture = new Texture("src/main/engine/testGUI/grassblock.png");
         Texture wallTexture = new Texture("src/main/engine/testGUI/square.jpg");
-        Texture deadpoolTexture = new Texture("src/main/engine/testGUI/deadpool.png");
+        Texture player1Texture = new Texture("src/main/engine/testGUI/deadpool.png");
+        Texture player2Texture = new Texture("src/main/engine/testGUI/capA.png");
         Texture bombTexture = new Texture("src/main/engine/testGUI/bomb.png");
-        Texture brokenWallTexture = new Texture("src/main/engine/testGUI/grassblock.png");
+        Texture brickTexture = new Texture("src/main/engine/testGUI/grassblock.png");
         Texture flameTexture = new Texture("src/main/engine/testGUI/flame.jpg");
 
         Mesh grassMesh = new Mesh(positions, textCoordsOfGrass, indices, grassTexture);
         Mesh wallMesh = new Mesh(positions, textCoordsOfWall, indices, wallTexture);
-        Mesh deadpoolMesh = new Mesh(positions, textCoordsOfDeadpool, indices, deadpoolTexture);
+        Mesh player1Mesh = new Mesh(positions, textCoordsOfPlayer, indices, player1Texture);
+        Mesh player2Mesh = new Mesh(positions, textCoordsOfPlayer, indices, player2Texture);
         Mesh bombMesh = new Mesh(positions, textCoordsOfBomb, indices, bombTexture);
-        Mesh brickMesh = new Mesh (positions, textCoordsOfBrokenWall, indices, brokenWallTexture);
+        Mesh brickMesh = new Mesh (positions, textCoordsOfBrick, indices, brickTexture);
         Mesh flameMesh = new Mesh (positions, textCoordsOfBomb, indices, flameTexture);
 
         File file = new File("src/main/engine/testGUI/tileMap.txt");
@@ -115,13 +117,13 @@ public class ObjectManager {
         }
         in.close();
 
-        deadpool = new Deadpool(deadpoolMesh);
-        deadpool.setPosition(-6, 7, -14.0f);
-        deadpool.setAutoMode(true);
+        player1 = new Player(player1Mesh);
+        player1.setPosition(-6, 7, -14.0f);
+        player1.setAutoMode(true);
 
-        deadpool2 = new Deadpool(deadpoolMesh);
-        deadpool2.setPosition(-6, -3, -14.0f);
-        deadpool2.setAutoMode(false);
+        player2 = new Player(player2Mesh);
+        player2.setPosition(-6, -3, -14.0f);
+        player2.setAutoMode(false);
         width = 16;
         height = 16;
         durationTimeBomb = 2.0f;

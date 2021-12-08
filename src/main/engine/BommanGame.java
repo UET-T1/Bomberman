@@ -4,7 +4,7 @@ import org.joml.Vector3f;
 
 import main.engine.objects.Bomb;
 import main.engine.objects.Brick;
-import main.engine.objects.Deadpool;
+import main.engine.objects.Player;
 import main.engine.objects.Flame;
 import main.engine.testGUI.Camera;
 
@@ -13,8 +13,8 @@ public class BommanGame implements GameLogic {
     private static Brick[][] tileBrick;
     private static Bomb[][] tileBomb;
     private static Flame[][] tileFlame;
-    private static Deadpool deadpool;
-    private static Deadpool deadpool2;
+    private static Player player1;
+    private static Player player2;
     private final Vector3f cameraInc;
     private final Renderer renderer;
     private final Camera camera;
@@ -34,36 +34,36 @@ public class BommanGame implements GameLogic {
         tileBrick = ObjectManager.tileBrick;
         tileBomb = ObjectManager.tileBomb;
         tileFlame = ObjectManager.tileFlame;
-        deadpool = ObjectManager.deadpool;
-        deadpool2 = ObjectManager.deadpool2;
+        player1 = ObjectManager.player1;
+        player2 = ObjectManager.player2;
     }
 
     @Override
     public void input(Window window, Input input) throws Exception {
         cameraInc.set(0, 0, 0);
-        if (!deadpool.isDead()) {
-            deadpool.handleEvent(window, input);
-            deadpool.takeBomb(window, input);
+        if (!player1.isDead()) {
+            player1.handleEvent(window, input);
+            player1.takeBomb(window, input);
         }
 
-        if (!deadpool2.isDead()) {
-            deadpool2.handleEvent(window, input);
-            deadpool2.takeBomb(window, input);
+        if (!player2.isDead()) {
+            player2.handleEvent(window, input);
+            player2.takeBomb(window, input);
         }
     }
 
     @Override
     public void update(float interval, Input input, Window window) {
-        if (!deadpool.isDead()) {
-            deadpool.setSpeed(0.2f);
-            deadpool.setTargetPosition(new Vector3f(7, -5, -14.0f));
-            deadpool.dead();
+        if (!player1.isDead()) {
+            player1.setSpeed(0.2f);
+            player1.setTargetPosition(new Vector3f(7, -5, -14.0f));
+            player1.dead();
         }
 
-        if (!deadpool2.isDead()) {
-            deadpool2.setSpeed(0.2f);
-            deadpool2.setTargetPosition(new Vector3f(7, -5, -14.0f));
-            deadpool2.dead();
+        if (!player2.isDead()) {
+            player2.setSpeed(0.2f);
+            player2.setTargetPosition(new Vector3f(7, -5, -14.0f));
+            player2.dead();
         }
         for (Bomb[] bombs : tileBomb) {
             for (Bomb bomb : bombs) {
@@ -97,10 +97,10 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
-        if (!deadpool.isDead())
-            renderer.render(deadpool);
-        if (!deadpool2.isDead())
-            renderer.render(deadpool2);
+        if (!player1.isDead())
+            renderer.render(player1);
+        if (!player2.isDead())
+            renderer.render(player2);
         
         for (Brick[] bricks : tileBrick) {
             for (Brick brick : bricks) {
@@ -149,7 +149,8 @@ public class BommanGame implements GameLogic {
             }
         }
 
-        deadpool.getMesh().cleanUp();
+        player1.getMesh().cleanUp();
+        player2.getMesh().cleanUp();
     }
 
 }
