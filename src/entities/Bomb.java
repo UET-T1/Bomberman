@@ -29,7 +29,7 @@ public class Bomb extends GameItem {
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      bombTexture = new Texture("resources/textures/bomb1.png");
+      bombTexture = new Texture("resources/textures/bomb.png");
       mesh = new Mesh(positions, textCoords, indices, bombTexture);
     } catch (Exception e) {
       e.printStackTrace();

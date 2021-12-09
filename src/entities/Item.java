@@ -19,15 +19,15 @@ public class Item extends GameItem {
   static {
     try {
       textures = new Texture[]{
-          new Texture("resources/textures/bombItem.jpg"),
-          new Texture("resources/textures/speedItem.jpg"),
-          new Texture("resources/textures/powerItem.jpg")
+          new Texture("resources/textures/bombItem.png"),
+          new Texture("resources/textures/speedItem.png"),
+          new Texture("resources/textures/powerItem.png")
       };
       textCoords = new float[]{
-          0.0f, 0.0f,
-          1.0f, 0.0f,
-          1.0f, 1.0f,
-          0.0f, 1.0f};
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f};
       meshes = new Mesh[] {
           new Mesh(positions, textCoords, indices, textures[bombItem]),
           new Mesh(positions, textCoords, indices, textures[speedItem]),
@@ -48,7 +48,7 @@ public class Item extends GameItem {
   }
 
   public Item(int type) throws Exception {
-    this(mesh, type + 1);
+    this(meshes[type], type + 1);
   }
 
   @Override

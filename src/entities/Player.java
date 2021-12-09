@@ -33,15 +33,13 @@ public class Player extends GameItem implements Movable, Auto {
   public static Map<String, Integer> characters = new HashMap<>();
   private static Mesh[] meshes;
   static {
-    characters.put("Captain", 0);
-    characters.put("Deadpool", 1);
+    characters.put("Deadpool", 0);
   }
   public static Texture[] textures;
 
   static {
     try {
       textures = new Texture[]{
-          new Texture("resources/textures/capA.png"),
           new Texture("resources/textures/eraeser.png")
       };
       textCoords = new float[]{
@@ -50,8 +48,7 @@ public class Player extends GameItem implements Movable, Auto {
           1.0f, 1.0f,
           0.0f, 1.0f};
       meshes = new Mesh[] {
-          new Mesh(positions, textCoords, indices, textures[0]),
-          new Mesh(positions, textCoords, indices, textures[1])
+          new Mesh(positions, textCoords, indices, textures[0])
       };
     } catch (Exception e) {
       e.printStackTrace();

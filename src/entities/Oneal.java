@@ -25,7 +25,7 @@ public class Oneal extends GameItem implements Movable {
 
   static {
     try {
-      onealTexture = new Texture("resources/textures/oneal.jpg");
+      onealTexture = new Texture("resources/textures/penA.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
@@ -43,7 +43,7 @@ public class Oneal extends GameItem implements Movable {
 
   public Oneal(Mesh mesh) throws Exception {
     super(mesh);
-    isDead = true;
+    isDead = false;
     chaseStat = false;
   }
 
