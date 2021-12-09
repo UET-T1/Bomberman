@@ -6,6 +6,7 @@ import engine.Movable;
 import engine.ObjectManager;
 import engine.Utils;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -19,6 +20,7 @@ public class Balloom extends GameItem implements Movable {
   private Vector3f nextPosition;
   private static Texture balloomTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -29,6 +31,9 @@ public class Balloom extends GameItem implements Movable {
           0.0f, 1.0f};
       balloomTexture = new Texture("resources/textures/pencil.png");
       mesh = new Mesh(positions, textCoords, indices, balloomTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -42,8 +47,16 @@ public class Balloom extends GameItem implements Movable {
     nextPosition = null;
   }
 
+  public Balloom(Animation animation) {
+    super(animation);
+    isDead = false;
+    chaseStat = false;
+    nextPosition = null;
+  }
+
   public Balloom() throws Exception {
     this(mesh);
+    //this(animation);
   }
 
   @Override

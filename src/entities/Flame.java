@@ -5,6 +5,7 @@ import engine.GameItem;
 import engine.Input;
 import engine.Timer;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -19,6 +20,7 @@ public class Flame extends GameItem {
   private float durationTime;// duration time of flame
   private static Texture flameTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -29,6 +31,9 @@ public class Flame extends GameItem {
           1.0f, 1.0f,
           0.0f, 1.0f};
       mesh = new Mesh(positions, textCoords, indices, flameTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -44,6 +49,14 @@ public class Flame extends GameItem {
 
   public Flame(float durationTime) throws Exception {
     this(mesh, durationTime);
+    //this(animation, durationTime);
+  }
+
+  public Flame(Animation animation, float durationTime) {
+    super(animation);
+    time = new Timer();
+    this.durationTime = durationTime;
+    timeToBoom = new float[0];
   }
 
   //check if bomb is start?

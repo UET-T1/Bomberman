@@ -7,6 +7,7 @@ import engine.Node;
 import engine.ObjectManager;
 import engine.Utils;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -22,6 +23,7 @@ public class Oneal extends GameItem implements Movable {
 
   private static Texture onealTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -32,9 +34,18 @@ public class Oneal extends GameItem implements Movable {
           1.0f, 1.0f,
           0.0f, 1.0f};
       mesh = new Mesh(positions, textCoords, indices, onealTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public Oneal(Animation animation) {
+    super(animation);
+    isDead = false;
+    chaseStat = false;
   }
 
   public Oneal() throws Exception {

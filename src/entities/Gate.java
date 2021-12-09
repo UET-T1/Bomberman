@@ -4,14 +4,17 @@ package entities;
 import engine.GameItem;
 import engine.Input;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
+import org.lwjgl.assimp.AIAnimation;
 
 public class Gate extends GameItem {
 
   private static Texture gateTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -22,9 +25,16 @@ public class Gate extends GameItem {
           1.0f, 1.0f,
           0.0f, 1.0f};
       mesh = new Mesh(positions, textCoords, indices, gateTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public Gate(Animation animation) {
+    super(animation);
   }
 
 
@@ -35,6 +45,7 @@ public class Gate extends GameItem {
 
   public Gate() throws Exception {
     this(mesh);
+    //this(animation);
   }
 
   @Override
