@@ -1,0 +1,48 @@
+{
+    "name": "Stage 1, Level 1 - Y",
+	"img": "bomberman-assets/imgs/levels/level-00.png",
+    "height": 12,
+    "width": 14,
+	"time": 150,
+	"wallGenPercent": 40,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwww..........", "1": "wwww__________" },
+        { "0": "w  w..wwwwwwww", "1": "w  w__wwwwwwww" },
+        { "0": "we w..w   0_fw", "1": "w  w__w      w" },
+        { "0": "w  wwww     ww", "1": "w  wwww     ww" },
+        { "0": "w 0__c      w.", "1": "w           w_" },
+        { "0": "wwwwwwww   cw.", "1": "wwwwwwww    w_" },
+        { "0": ".......wwww_w.", "1": "_______wwww w_" },
+        { "0": "..........w_w.", "1": "__________w w_" },
+        { "0": "..........w_w.", "1": "__________w w_" },
+        { "0": "..........w_w.", "1": "__________w w_" },
+        { "0": "..........wpw.", "1": "__________w w_" },
+        { "0": "..........www.", "1": "__________www_" }
+    ],
+    "bonus": {
+        "points": {
+            "chance": 1,
+            "nb": 3
+        }, "life": {
+            "chance": 1,
+            "nb": 1
+        }
+    }
+}

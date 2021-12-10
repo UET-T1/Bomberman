@@ -1,0 +1,69 @@
+{
+    "name": "Stage 3, Level 21 - Dalmatians",
+	"img": "bomberman-assets/imgs/levels/level-20.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 25,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
+        { "0": "w    c        0w", "1": "w              w" },
+        { "0": "w 2 c   b    ccw", "1": "w       w     bw" },
+        { "0": "w  bbb c  2f _cw", "1": "w  www         w" },
+        { "0": "w  bbbbb    bp_w", "1": "w  wwwww       w" },
+        { "0": "w  bbec    bbbbw", "1": "w  ww      wwwww" },
+        { "0": "w   b2    bbbbbw", "1": "w   w     wwwwww" },
+        { "0": "w     c  bbbb bw", "1": "w      3 wwww ww" },
+        { "0": "w        bbf  4w", "1": "w        ww    w" },
+        { "0": "wc b         b w", "1": "wb             w" },
+        { "0": "wf2          1 w", "1": "w              w" },
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 10,
+            "nb": -1
+        },
+        "bombs": {
+            "chance": 15,
+            "nb": -1
+        },
+        "flames": {
+            "chance": 10,
+            "nb": -1
+        },
+        "speed": {
+            "chance": 10,
+            "nb": 4
+        },
+        "shield": {
+            "chance": 5,
+            "nb": 1
+        },
+        "time": {
+            "chance": 20,
+            "nb": 1
+        },
+        "points": {
+            "chance": 15,
+            "nb": 3
+        }
+    }
+}

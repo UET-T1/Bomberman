@@ -2,7 +2,9 @@ package main.engine.objects;
 
 import main.engine.GameObject;
 import main.engine.Input;
+import main.engine.ObjectManager;
 import main.engine.Renderer;
+import main.engine.Util;
 import main.engine.Window;
 import main.engine.testGUI.Mesh;
 
@@ -31,8 +33,11 @@ public class Brick extends GameObject {
 
     @Override
     public void onCollapse() {
-        // TODO Auto-generated method stub
-        
+        setVisible(false);
+        Util.round1(getPosition());
+        int x = (int) getPosition().x;
+        int y = (int) getPosition().y;
+        ObjectManager.createItem(x, y);
     }
 
     @Override

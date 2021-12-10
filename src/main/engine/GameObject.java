@@ -18,11 +18,9 @@ public abstract class GameObject implements Observable, Collidable {
     
     private float scale;
 
-    protected boolean isTargetMoved;// true if target moved
     protected float speed;// speed of item
     protected boolean chaseStat;// true if item not go full one square
-    protected String chaseDiection = "";// chase direction  
-    protected int dem = 0;// the number of step to go full one square
+    
     protected Vector3f nextPosition;
 
     public GameObject(Mesh mesh) {
