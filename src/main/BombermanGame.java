@@ -9,33 +9,41 @@ import engine.ObjectManager;
 import engine.Window;
 import engine.graphics.Camera;
 import engine.graphics.Renderer;
-import entities.Balloom;
+import entities.Pencil;
 import entities.Bomb;
 import entities.Brick;
 import entities.Flame;
 import entities.Gate;
+import entities.Ink;
 import entities.Item;
-import entities.Oneal;
+import entities.Menu;
+import entities.PenA;
 import entities.Player;
+import entities.Witch;
 
 public class BombermanGame implements IGameLogic {
 
-  public static int dem = 22;
+  public static int dem = 0;
   private static GameItem[][] tileMap;
   private static Brick[][] tileBrick;
   private static Bomb[][] tileBomb;
   private static Flame[][] tileFlame;
   private static Player player1;
-  //private static Player player2;
-  private static Balloom[] balloom;
-  private static Oneal[] oneal;
+  private static Pencil[] pencil;
+  private static PenA[] penA;
+  private static Ink[] ink;
+  private static Witch[] witch;
   private static Gate gate;
   private static Item[][] tileItem;
   private static Player[] humanEnemy;
+  private static Menu menu;
   private static int width;
   private static int height;
   private final Renderer renderer;
   private final Camera camera;
+  private static int status;
+  private final int MENU = 0;
+  private final int MAP = 1;
 
   public BombermanGame() {
     renderer = new Renderer();
@@ -50,11 +58,13 @@ public class BombermanGame implements IGameLogic {
     tileFlame = ObjectManager.tileFlame;
     tileItem = ObjectManager.tileItem;
     player1 = ObjectManager.player1;
-    //player2 = ObjectManager.player2;
-    balloom = ObjectManager.balloom;
-    oneal = ObjectManager.oneal;
+    pencil = ObjectManager.pencil;
+    penA = ObjectManager.penA;
     gate = ObjectManager.gate;
     humanEnemy = ObjectManager.humanEnemy;
+    ink = ObjectManager.ink;
+    witch = ObjectManager.witch;
+    menu = ObjectManager.menu;
 
     width = ObjectManager.width;
     height = ObjectManager.height;
@@ -69,164 +79,217 @@ public class BombermanGame implements IGameLogic {
   @Override
   public void init(Window window) throws Exception {
     renderer.init(window, camera);
-    createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+    //createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+    ObjectManager.createMenu();
+    menu = ObjectManager.menu;
+    status = MENU;
+    camera.setPosition(0, 0, 14);
   }
 
   @Override
   public void input(Window window, Input input) throws Exception {
-    //camera.update(input);
-    if (!player1.isDead()) {
-      if (!ObjectManager.checkCollision(player1.getPosition().x, player1.getPosition().y,
-          gate.getPosition().x, gate.getPosition().y)) {
-        dem++;
+    if (status == MENU) {
+
+    }
+    else {
+      //camera.update(input);
+      if (!player1.isDead()) {
+        if (!ObjectManager.checkCollision(player1.getPosition().x, player1.getPosition().y,
+            gate.getPosition().x, gate.getPosition().y)) {
+          dem++;
+          createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+        }
+      } else {
         createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
       }
-    } else {
-      createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
-    }
 
-    if (!player1.isDead()) {
-      if (input.isKeyDown(GLFW_KEY_A)) {
-        player1.setAutoMode(true);
+      if (!player1.isDead()) {
         player1.setTargetPosition(gate.getPosition());
+        player1.handleEvent(window, input);
+        player1.takeBomb(window, input);
       }
-      player1.handleEvent(window, input);
-      player1.takeBomb(window, input);
-    }
-    for (int i = 0; i < balloom.length; ++i) {
-      if (!balloom[i].isDead()) {
-        balloom[i].handleEvent(window, input);
+      for (int i = 0; i < pencil.length; ++i) {
+        if (!pencil[i].isDead()) {
+          pencil[i].handleEvent(window, input);
+        }
       }
-    }
-    for (int i = 0; i < oneal.length; ++i) {
-      if (!oneal[i].isDead()) {
-        oneal[i].setTargetPosition(player1.getPosition());
-        oneal[i].handleEvent(window, input);
+      for (int i = 0; i < penA.length; ++i) {
+        if (!penA[i].isDead()) {
+          penA[i].setTargetPosition(player1.getPosition());
+          penA[i].handleEvent(window, input);
+        }
       }
-    }
-    for (int i = 0; i < humanEnemy.length; ++i) {
-      if (!humanEnemy[i].isDead()) {
-        humanEnemy[i].setAutoMode(true);
-        humanEnemy[i].setTargetPosition(gate.getPosition());
-        humanEnemy[i].handleEvent(window, input);
-        humanEnemy[i].takeBomb(window, input);
+      for (int i = 0; i < witch.length; ++i) {
+        if (!witch[i].isDead()) {
+          witch[i].setTargetPosition(player1.getPosition());
+          witch[i].handleEvent(window, input);
+        }
       }
-    }
+      for (int i = 0; i < ink.length; ++i) {
+        if (!ink[i].isDead()) {
+          ink[i].handleEvent(window, input);
+        }
+      }
+      for (int i = 0; i < humanEnemy.length; ++i) {
+        if (!humanEnemy[i].isDead()) {
+          humanEnemy[i].setAutoMode(true);
+          humanEnemy[i].setTargetPosition(gate.getPosition());
+          humanEnemy[i].handleEvent(window, input);
+          humanEnemy[i].takeBomb(window, input);
+        }
+      }
 
-    ObjectManager.checkIfEatItem(player1);
-    for (int i = 0; i < humanEnemy.length; ++i) {
-      ObjectManager.checkIfEatItem(humanEnemy[i]);
-    }
+      ObjectManager.checkIfEatItem(player1);
+      for (int i = 0; i < humanEnemy.length; ++i) {
+        ObjectManager.checkIfEatItem(humanEnemy[i]);
+      }
 
-    ObjectManager.setUpBomb();
+      ObjectManager.setUpBomb();
+    }
   }
 
 
   @Override
   public void update(float interval, Input input) {
-    if (!player1.isDead()) {
-      player1.dead();
-    }
-    for (int i = 0; i < humanEnemy.length; ++i) {
-      if (!humanEnemy[i].isDead()) {
-        humanEnemy[i].dead();
-      }
-    }
 
-    for (Bomb[] bombs : tileBomb) {
-      for (Bomb bomb : bombs) {
-        if (bomb != null) {
-          bomb.handleEvent();
+    if (status == MENU) {
+
+    }
+    else {
+      if (!player1.isDead()) {
+        player1.dead();
+        player1.lureHandle();
+      }
+      for (int i = 0; i < humanEnemy.length; ++i) {
+        if (!humanEnemy[i].isDead()) {
+          humanEnemy[i].dead();
         }
       }
-    }
 
-    for (Flame[] flames : tileFlame) {
-      for (Flame flame : flames) {
-        if (flame != null) {
-          flame.stop();
+      for (Bomb[] bombs : tileBomb) {
+        for (Bomb bomb : bombs) {
+          if (bomb != null) {
+            bomb.handleEvent();
+          }
         }
       }
-    }
 
-    for (int i = 0; i < balloom.length; ++i) {
-      if (!balloom[i].isDead()) {
-        balloom[i].setSpeed(0.05f);
-        balloom[i].handleCollision();
+      for (Flame[] flames : tileFlame) {
+        for (Flame flame : flames) {
+          if (flame != null) {
+            flame.stop();
+          }
+        }
       }
-    }
-    for (int i = 0; i < oneal.length; ++i) {
-      if (!oneal[i].isDead()) {
-        oneal[i].handleCollision();
-      }
-    }
 
-    ObjectManager.setUpBomb();
+      for (int i = 0; i < pencil.length; ++i) {
+        if (!pencil[i].isDead()) {
+          pencil[i].setSpeed(0.05f);
+          pencil[i].handleCollision();
+        }
+      }
+      for (int i = 0; i < penA.length; ++i) {
+        if (!penA[i].isDead()) {
+          penA[i].handleCollision();
+        }
+      }
+      for (int i = 0; i < ink.length; ++i) {
+        if (!ink[i].isDead()) {
+          ink[i].setSpeed(0.05f);
+          ink[i].handleCollision();
+        }
+      }
+      for (int i = 0; i < witch.length; ++i) {
+        if (!witch[i].isDead()) {
+          witch[i].setSpeed(0.05f);
+          witch[i].handleCollision();
+        }
+      }
+      ObjectManager.lurePlayer(player1.getPosition().x, player1.getPosition().y);
+
+      ObjectManager.setUpBomb();
+    }
   }
 
   @Override
   public void render(Window window) {
 
     renderer.render(window, camera, null, null);
-    for (Bomb[] bombs : tileBomb) {
-      for (Bomb bomb : bombs) {
-        if (bomb != null && bomb.isShow()) {
-          bomb.render(renderer);
+
+    if (status == MENU) {
+      menu.render(renderer);
+    }
+    else {
+      for (Bomb[] bombs : tileBomb) {
+        for (Bomb bomb : bombs) {
+          if (bomb != null && bomb.isShow()) {
+            bomb.render(renderer);
+          }
+        }
+      }
+      for (Flame[] flames : tileFlame) {
+        for (Flame flame : flames) {
+          if (flame != null && flame.isStart()) {
+            flame.render(renderer);
+          }
+        }
+      }
+
+      if (!player1.isDead()) {
+        player1.render(renderer);
+      }
+      for (int i = 0; i < humanEnemy.length; ++i) {
+        if (!humanEnemy[i].isDead()) {
+          humanEnemy[i].render(renderer);
+        }
+      }
+
+      for (int i = 0; i < pencil.length; ++i) {
+        if (!pencil[i].isDead()) {
+          pencil[i].render(renderer);
+        }
+      }
+      for (int i = 0; i < penA.length; ++i) {
+        if (!penA[i].isDead()) {
+          penA[i].render(renderer);
+        }
+      }
+      for (int i = 0; i < ink.length; ++i) {
+        if (!ink[i].isDead()) {
+          ink[i].render(renderer);
+        }
+      }
+      for (int i = 0; i < witch.length; ++i) {
+        if (!witch[i].isDead()) {
+          witch[i].render(renderer);
+        }
+      }
+
+      for (Item[] items : tileItem) {
+        for (Item item : items) {
+          if (item != null && item.isVisible()) {
+            item.render(renderer);
+          }
+        }
+      }
+      for (Brick[] bricks : tileBrick) {
+        for (Brick brick : bricks) {
+          if (brick != null && brick.getVisible()) {
+            brick.render(renderer);
+          }
+        }
+      }
+
+      gate.render(renderer);
+      for (GameItem[] gameObjects : tileMap) {
+        for (GameItem gameObject : gameObjects) {
+          if (gameObject != null) {
+            gameObject.render(renderer);
+          }
         }
       }
     }
-    for (Flame[] flames : tileFlame) {
-      for (Flame flame : flames) {
-        if (flame != null && flame.isStart()) {
-          flame.render(renderer);
-        }
-      }
-    }
-
-    if (!player1.isDead()) {
-      player1.render(renderer);
-    }
-    for (int i = 0; i < humanEnemy.length; ++i) {
-      if (!humanEnemy[i].isDead()) {
-        humanEnemy[i].render(renderer);
-      }
-    }
-
-    for (int i = 0; i < balloom.length; ++i) {
-      if (!balloom[i].isDead()) {
-        balloom[i].render(renderer);
-      }
-    }
-    for (int i = 0; i < oneal.length; ++i) {
-      if (!oneal[i].isDead()) {
-        oneal[i].render(renderer);
-      }
-    }
-
-    gate.render(renderer);
-
-
-    for (Item[] items : tileItem) {
-      for (Item item : items) {
-        if (item != null && item.isVisible()) {
-          item.render(renderer);
-        }
-      }
-    }
-    for (Brick[] bricks : tileBrick) {
-      for (Brick brick : bricks) {
-        if (brick != null && brick.getVisible()) {
-          brick.render(renderer);
-        }
-      }
-    }
-    for (GameItem[] gameObjects : tileMap) {
-      for (GameItem gameObject : gameObjects) {
-        if (gameObject != null) {
-          gameObject.render(renderer);
-        }
-      }
-    }
+    
 
     renderer.finishRender();
   }
@@ -291,14 +354,29 @@ public class BombermanGame implements IGameLogic {
       }
     }
 
-    if (balloom != null) {
-      for (int i = 0; i < balloom.length; ++i) {
-        balloom[i].getMesh().cleanUp();
+    if (pencil != null) {
+      for (int i = 0; i < pencil.length; ++i) {
+        pencil[i].getMesh().cleanUp();
       }
     }
-    if (oneal != null) {
-      for (int i = 0; i < oneal.length; ++i) {
-        oneal[i].getMesh().cleanUp();
+    if (penA != null) {
+      for (int i = 0; i < penA.length; ++i) {
+        penA[i].getMesh().cleanUp();
+      }
+    }
+    if (ink != null) {
+      for (int i = 0; i < ink.length; ++i) {
+        ink[i].getMesh().cleanUp();
+      }
+    }
+    if (witch != null) {
+      for (int i = 0; i < witch.length; ++i) {
+        witch[i].getMesh().cleanUp();
+      }
+    }
+    if (menu != null) {
+      if (menu.getMesh() != null) {
+        menu.getMesh().cleanUp();
       }
     }
   }

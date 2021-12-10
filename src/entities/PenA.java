@@ -15,25 +15,25 @@ import java.util.PriorityQueue;
 import java.util.concurrent.ThreadLocalRandom;
 import org.joml.Vector3f;
 
-public class Oneal extends GameItem implements Movable {
+public class PenA extends GameItem implements Movable {
 
   private boolean isDead;
   private boolean chaseStat;
   private Vector3f targetPosition;
 
-  private static Texture onealTexture;
+  private static Texture penATexture;
   private static Mesh mesh;
   private static Animation animation;
 
   static {
     try {
-      onealTexture = new Texture("resources/textures/penA.png");
+      penATexture = new Texture("resources/textures/penA.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      mesh = new Mesh(positions, textCoords, indices, onealTexture);
+      mesh = new Mesh(positions, textCoords, indices, penATexture);
       // remove mesh and active the following comment
       // hard-coded
       //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
@@ -42,17 +42,17 @@ public class Oneal extends GameItem implements Movable {
     }
   }
 
-  public Oneal(Animation animation) {
+  public PenA(Animation animation) {
     super(animation);
     isDead = false;
     chaseStat = false;
   }
 
-  public Oneal() throws Exception {
+  public PenA() throws Exception {
     this(mesh);
   }
 
-  public Oneal(Mesh mesh) throws Exception {
+  public PenA(Mesh mesh) throws Exception {
     super(mesh);
     isDead = false;
     chaseStat = false;

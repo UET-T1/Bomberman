@@ -9,17 +9,14 @@ import engine.Window;
 import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
-import engine.graphics.Texture;
 import java.util.concurrent.ThreadLocalRandom;
 import org.joml.Vector3f;
 
-public class Balloom extends GameItem implements Movable {
+public class Pencil extends GameItem implements Movable {
 
   private boolean isDead;
   private boolean chaseStat;
   private Vector3f nextPosition;
-  private static Texture balloomTexture;
-  private static Mesh mesh;
   private static Animation animation;
 
   static {
@@ -29,38 +26,35 @@ public class Balloom extends GameItem implements Movable {
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      balloomTexture = new Texture("resources/textures/pencil.png");
-      mesh = new Mesh(positions, textCoords, indices, balloomTexture);
-      // remove mesh and active the following comment
-      // hard-coded
-      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
+
+      animation = new Animation(9, 3, 10.0f, "resources/textures/pencil", positions, textCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
 
-  public Balloom(Mesh mesh) throws Exception {
+  public Pencil(Mesh mesh) throws Exception {
     super(mesh);
     isDead = false;
     chaseStat = false;
     nextPosition = null;
   }
 
-  public Balloom(Animation animation) {
+  public Pencil(Animation animation) {
     super(animation);
     isDead = false;
     chaseStat = false;
     nextPosition = null;
   }
 
-  public Balloom() throws Exception {
-    this(mesh);
-    //this(animation);
+  public Pencil() throws Exception {
+    this(animation);
   }
 
   @Override
   public void render(Renderer renderer) {
+    this.meshItem = animation.getCurrentMesh();
     renderer.render(this);
   }
 

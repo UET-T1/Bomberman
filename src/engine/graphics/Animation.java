@@ -12,18 +12,25 @@ public class Animation {
   private double lastTime;
   private double fps;
   private Timer timer;
+  private Timer distantTime; // calculate time to next animation
+  private double timeToNext; // distance between 2 animation loop 
 
   /**
    * Animation object to store sprites
    * @param amount number of sprites
    * @param fps frames to render in a second
    * @param filename PREFIX of sprites
+   * @param timeToNext distance between 2 animation loop 
    * @throws Exception
    */
-  public Animation(int amount, int fps, String filename, float[] positions, float[] textCoords, int[] indices) throws Exception {
+  public Animation(int amount, int fps, double timeToNext, String filename, float[] positions, float[] textCoords, int[] indices) throws Exception {
     this.texturePointer = 0;
     this.elapsedTime = 0;
     this.currentTime = 0;
+
+    this.timeToNext = timeToNext;
+    distantTime = new Timer();
+    distantTime.init();
 
     timer = new Timer();
     timer.init();
@@ -64,6 +71,15 @@ public class Animation {
    */
 
   public Mesh getCurrentMesh() {
+
+    if (texturePointer == meshes.length - 1) {
+      if (distantTime.getTime() - distantTime.getLastLoopTime() < timeToNext) {
+        return meshes[texturePointer];
+      } else {
+        distantTime.init();
+      }
+    }
+
     this.currentTime = timer.getTime();
     this.elapsedTime += currentTime - lastTime;
 
