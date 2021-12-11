@@ -88,7 +88,7 @@ public class GameEngine implements Runnable {
     gameLogic.input(window, input);
   }
 
-  protected void update(float interval) {
+  protected void update(float interval) throws Exception {
     gameLogic.update(interval, input);
   }
 

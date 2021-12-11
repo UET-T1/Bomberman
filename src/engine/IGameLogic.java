@@ -6,7 +6,7 @@ public interface IGameLogic {
 
   void input(Window window, Input input) throws Exception;
 
-  void update(float interval, Input input);
+  void update(float interval, Input input) throws Exception;
 
   void render(Window window);
 

@@ -12,6 +12,7 @@ import engine.graphics.Renderer;
 import entities.Pencil;
 import entities.Bomb;
 import entities.Brick;
+import entities.Button;
 import entities.Flame;
 import entities.Gate;
 import entities.Ink;
@@ -37,6 +38,7 @@ public class BombermanGame implements IGameLogic {
   private static Item[][] tileItem;
   private static Player[] humanEnemy;
   private static Menu menu;
+  private static Button startButton;
   private static int width;
   private static int height;
   private final Renderer renderer;
@@ -64,7 +66,6 @@ public class BombermanGame implements IGameLogic {
     humanEnemy = ObjectManager.humanEnemy;
     ink = ObjectManager.ink;
     witch = ObjectManager.witch;
-    menu = ObjectManager.menu;
 
     width = ObjectManager.width;
     height = ObjectManager.height;
@@ -79,9 +80,15 @@ public class BombermanGame implements IGameLogic {
   @Override
   public void init(Window window) throws Exception {
     renderer.init(window, camera);
-    //createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
-    ObjectManager.createMenu();
-    menu = ObjectManager.menu;
+    // createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+    // status = MAP;
+
+    menu = new Menu();
+    menu.setPosition(0, 0, -1.5f);
+
+    startButton = new Button("Start");
+    startButton.setPosition(0, -4, -1.5f);
+
     status = MENU;
     camera.setPosition(0, 0, 14);
   }
@@ -89,7 +96,7 @@ public class BombermanGame implements IGameLogic {
   @Override
   public void input(Window window, Input input) throws Exception {
     if (status == MENU) {
-
+      startButton.handleEvent(window, input);
     }
     else {
       //camera.update(input);
@@ -99,6 +106,16 @@ public class BombermanGame implements IGameLogic {
           dem++;
           createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
         }
+        if (humanEnemy != null)
+        for (int i = 0; i < humanEnemy.length; ++i) {
+          if (!humanEnemy[i].isDead()) {
+            if (!ObjectManager.checkCollision(humanEnemy[i].getPosition().x, humanEnemy[i].getPosition().y,
+            gate.getPosition().x, gate.getPosition().y)) {
+              createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+            }
+          }
+        }
+  
       } else {
         createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
       }
@@ -150,10 +167,13 @@ public class BombermanGame implements IGameLogic {
 
 
   @Override
-  public void update(float interval, Input input) {
+  public void update(float interval, Input input) throws Exception {
 
     if (status == MENU) {
-
+      if (startButton.isClick) {
+        createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
+        status = MAP;
+      }
     }
     else {
       if (!player1.isDead()) {
@@ -217,6 +237,7 @@ public class BombermanGame implements IGameLogic {
     renderer.render(window, camera, null, null);
 
     if (status == MENU) {
+      startButton.render(renderer);
       menu.render(renderer);
     }
     else {

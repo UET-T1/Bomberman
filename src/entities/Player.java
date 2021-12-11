@@ -31,6 +31,7 @@ public class Player extends GameItem implements Movable, Auto {
 
   static {
     characters.put("Deadpool", 0);
+    characters.put("Enemy", 1);
   }
 
   static {
@@ -42,7 +43,8 @@ public class Player extends GameItem implements Movable, Auto {
           0.0f, 1.0f};
 
       animationList = new Animation[] {
-          new Animation(4, 10, 5.0f, "resources/textures/ereaser", positions, textCoords, indices)
+          new Animation(4, 10, 5.0f, "resources/textures/ereaser", positions, textCoords, indices),
+          new Animation(4, 10, 5.0f, "resources/textures/eenemy", positions, textCoords, indices)
       };
 
     } catch (Exception e) {

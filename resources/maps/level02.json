@@ -1,10 +1,12 @@
 {
-    "name": "Stage 1, Level 3 - Whistle",
-	"img": "bomberman-assets/imgs/levels/level-02.png",
-    "height": 12,
-    "width": 16,
-	"time": 150,
-	"wallGenPercent": 40,
+    "name": "Stage 3, Level 24 - Boss PAC-MAN",
+	"img": "bomberman-assets/imgs/levels/level-23.png",
+    "height": 27,
+    "width": 21,
+	"time": 250,
+	"wallGenPercent": 55,
+    "enemiesToKill": 42,
+    "music": "sounds/boss3-pacman.ogg",
     "objects": {
 		"outside": ".",
         "empty": " ",
@@ -23,38 +25,87 @@
         "enemyFrog": "5"
     },
     "map": [
-        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
-        { "0": "w            c w", "1": "w              w" },
-        { "0": "w   e        cfw", "1": "w              w" },
-        { "0": "wf  0      5 cew", "1": "w              w" },
-        { "0": "w          wwwww", "1": "w          wwwww" },
-        { "0": "w    b bb  w....", "1": "w          w____" },
-        { "0": "w    bccb  w....", "1": "w          w____" },
-        { "0": "w    bccb  w....", "1": "w          w____" },
-        { "0": "w    bb b  w....", "1": "w          w____" },
-        { "0": "w  0c  _  1w....", "1": "w          w____" },
-        { "0": "w   c _p   w....", "1": "w          w____" },
-        { "0": "wwwwwwwwwwww....", "1": "wwwwwwwwwwww____" }
+        { "0": "wwwwwwwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwwwwwwww" },
+        { "0": "w6_     _6b6_     _6w", "1": "w                   w" },
+        { "0": "w_bbb bbb_b_bbb bbb_w", "1": "w                   w" },
+        { "0": "w b_b b_b b b_b b_b w", "1": "w                   w" },
+        { "0": "w bbb bbb b bbb bbb w", "1": "w                   w" },
+        { "0": "w                   w", "1": "w                   w" },
+        { "0": "w bbb b bbbbb b bbb w", "1": "w                   w" },
+        { "0": "w bbb bc_____cb bbb w", "1": "w                   w" },
+        { "0": "w     bcccbcccb     w", "1": "w                   w" },
+        { "0": "wwwww bbbcbcbbb wwwww", "1": "wwwww           wwwww" },
+        { "0": "....w bc_____cb w....", "1": "____w           w____" },
+        { "0": "....w bcbbcbbcb w....", "1": "____w           w____" },
+        { "0": "wwwww bcb___bcb wwwww", "1": "wwwww           wwwww" },
+        { "0": "w ___ ccccecccc ___ w", "1": "w                   w" },
+        { "0": "wwwww bcbbbbbcb wwwww", "1": "wwwww           wwwww" },
+        { "0": "....w bc_____cb w....", "1": "____w           w____" },
+        { "0": "....w bcbbbbbcb w....", "1": "____w           w____" },
+        { "0": "wwwww bc_____cb wwwww", "1": "wwwww           wwwww" },
+        { "0": "w         b         w", "1": "w                   w" },
+        { "0": "w bbb bbb b_bbb bbb w", "1": "w                   w" },
+        { "0": "w   b    _ _    b   w", "1": "w                   w" },
+        { "0": "wbb b b bbbbb b b bbw", "1": "w                   w" },
+        { "0": "wbb b b bbbbb b b bbw", "1": "w                   w" },
+        { "0": "w     b   b   b     w", "1": "w                   w" },
+        { "0": "w_bbbbbbb_b_bbbbbbb_w", "1": "w                   w" },
+        { "0": "wp_     _6b6_     _6w", "1": "w                   w" },
+        { "0": "wwwwwwwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwwwwwwww" }
+    ],
+    "spawner": [
+        {
+            "typeEnemy": "2",
+            "frequency": 4,
+            "position": {
+                "x": 10,
+                "y": 13
+            }
+        }
     ],
     "bonus": {
         "life": {
             "chance": 10,
-            "nb": 1
+            "nb": -1
         },
         "bombs": {
-            "chance": 100,
-            "nb": 1
+            "chance": 15,
+            "nb": -1
+        },
+        "flames": {
+            "chance": 10,
+            "nb": -1
         },
         "speed": {
             "chance": 10,
+            "nb": 4
+        },
+        "wallpass": {
+            "chance": 5,
+            "nb": 1
+        },
+        "detonator": {
+            "chance": 100,
+            "nb": 2
+        },
+        "bombpass": {
+            "chance": 2,
+            "nb": 1
+        },
+        "flampass": {
+            "chance": 1,
+            "nb": 1
+        },
+        "shield": {
+            "chance": 5,
             "nb": 1
         },
         "time": {
             "chance": 20,
-            "nb": 1
+            "nb": -1
         },
         "points": {
-            "chance": 15,
+            "chance": 5,
             "nb": 3
         }
     }
