@@ -141,8 +141,10 @@ public class Renderer {
   }
 
 
-  private void renderHud(Window window, IHud hud) {
-    hudShaderProgram.bind();
+  public void renderHud(Window window, IHud hud) {
+    if (hud != null) {
+      hudShaderProgram.bind();
+    }
 
     Matrix4f ortho = transformation.getOrthoProjectionMatrix(0, window.getWidth(),
         window.getHeight(), 0);

@@ -24,6 +24,7 @@ public class Client {
   public static serverThread server;
   public static String username;
   public static String connectIP;
+  public static String secretKey = new String("1237164");
 
   public static JTextPane chatMessages = new JTextPane();
   public static JScrollPane JPchatMessages = new JScrollPane(chatMessages);
@@ -251,6 +252,11 @@ public class Client {
 
   public static void terminate() {
     System.exit(0);
+  }
+
+  public static void sendResult(int time) throws IOException {
+    if (time <= 0) return;
+    dos.writeUTF(secretKey + "-" + username + "-" + time);
   }
 
   public static void reconnect() {
