@@ -1,0 +1,46 @@
+{
+    "name": "Stage 1, Level 2",
+	"img": "bomberman-assets/imgs/levels/level-01.png",
+    "height": 9,
+    "width": 15,
+	"time": 150,
+	"wallGenPercent": 40,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwww" },
+        { "0": "w_p_     4    w", "1": "w             w" },
+        { "0": "w_b b b b b b w", "1": "w             w" },
+        { "0": "w            fw", "1": "w             w" },
+        { "0": "w b b b b b b w", "1": "w             w" },
+        { "0": "w            3e", "1": "w             w" },
+        { "0": "w bb b b b b  w", "1": "w             w" },
+        { "0": "w  f 2        w", "1": "w             w" },
+        { "0": "wwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "points": {
+            "chance": 1,
+            "nb": -1
+        },
+        "life": {
+            "chance": 1,
+            "nb": 2
+        }
+    }
+}
