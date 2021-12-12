@@ -25,6 +25,7 @@ public class BommanGame implements GameLogic {
     private static Oneal[] oneal;
     private static Gate gate;
     private static Item[][] tileItem;
+    private static Player[] humanEnemy;
 
     private static int width;
     private static int height;
@@ -45,7 +46,7 @@ public class BommanGame implements GameLogic {
     @Override
     public void create(Window window) throws Exception {
         renderer.init(window);
-        createMap("src/resources/map/level" + (int)(dem/10) + (dem%10) + ".json");
+        createMap("src/resources/map/level" + (int)(dem/10) + (dem%10) + "0.json");
     }
 
     public void createMap(String path) throws Exception {
@@ -60,11 +61,15 @@ public class BommanGame implements GameLogic {
         balloom = ObjectManager.balloom;
         oneal = ObjectManager.oneal;
         gate = ObjectManager.gate;
+        humanEnemy = ObjectManager.humanEnemy;
 
         width = ObjectManager.width;
         height = ObjectManager.height;
 
         player1.setSpeed(0.1f);
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            humanEnemy[i].setSpeed(0.1f);
+        }
     }
 
     @Override
@@ -80,6 +85,7 @@ public class BommanGame implements GameLogic {
         }
         cameraInc.set(0, 0, 0);
         camera.setPosition(width/2 + 1, height/2, Math.max(width, height));
+
         if (!player1.isDead()) {
             if (input.isKeyDown(GLFW_KEY_A)) {
                 player1.setAutoMode(true);
@@ -88,11 +94,6 @@ public class BommanGame implements GameLogic {
             player1.handleEvent(window, input);
             player1.takeBomb(window, input);
         }
-
-        // if (!player2.isDead()) {
-        //     player2.handleEvent(window, input);
-        //     player2.takeBomb(window, input);
-        // }
         for (int i = 0; i < balloom.length; ++i) {
             if (!balloom[i].isDead()) {
                 balloom[i].handleEvent(window, input);
@@ -104,7 +105,19 @@ public class BommanGame implements GameLogic {
                 oneal[i].handleEvent(window, input);
             }
         }
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            if (!humanEnemy[i].isDead()) {
+                humanEnemy[i].setAutoMode(true);
+                humanEnemy[i].setTargetPosition(gate.getPosition());
+                humanEnemy[i].handleEvent(window, input);
+                humanEnemy[i].takeBomb(window, input);
+            }
+        }
+
         ObjectManager.checkIfEatItem(player1);
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            ObjectManager.checkIfEatItem(humanEnemy[i]);
+        }
 
         ObjectManager.setUpBomb();
     }
@@ -114,12 +127,12 @@ public class BommanGame implements GameLogic {
         if (!player1.isDead()) {
             player1.dead();
         }
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            if (!humanEnemy[i].isDead()) {
+                humanEnemy[i].dead();
+            }
+        }
 
-        // if (!player2.isDead()) {
-        //     player2.setSpeed(0.2f);
-        //     player2.setTargetPosition(new Vector3f(7, -5, -14.0f));
-        //     player2.dead();
-        // }
         for (Bomb[] bombs : tileBomb) {
             for (Bomb bomb : bombs) {
                 if (bomb != null)bomb.handleEvent();
@@ -164,14 +177,17 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
-        if (!player1.isDead()) player1.render(renderer);
 
-        //if (!player2.isDead()) player2.render(renderer);
+        if (!player1.isDead()) player1.render(renderer);
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            if (!humanEnemy[i].isDead()) {
+                humanEnemy[i].render(renderer);
+            }
+        }
 
         for (int i = 0; i < balloom.length; ++i) {
             if (!balloom[i].isDead()) balloom[i].render(renderer);
         }
-
         for (int i = 0; i < oneal.length; ++i) {
             if (!oneal[i].isDead()) oneal[i].render(renderer);
         }
@@ -204,6 +220,7 @@ public class BommanGame implements GameLogic {
     @Override
     public void destroy() {
         renderer.cleanup();
+        if (tileMap != null)
         for (GameObject[] gameObjects : tileMap) {
             for (GameObject gameObject : gameObjects) {
                 if (gameObject != null && gameObject.getMesh() != null) {
@@ -211,6 +228,7 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
+        if (tileBomb != null)
         for (Bomb[] bombs : tileBomb) {
             for (Bomb bomb : bombs) {
                 if (bomb != null && bomb.getMesh() != null) {
@@ -218,6 +236,7 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
+        if (tileFlame != null)
         for (Flame[] flames : tileFlame) {
             for (Flame flame : flames) {
                 if (flame != null && flame.getMesh() != null) {
@@ -225,6 +244,7 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
+        if (tileBrick != null)
         for (Brick[] bricks : tileBrick) {
             for (Brick brick : bricks) {
                 if (brick != null && brick.getMesh() != null) {
@@ -232,6 +252,7 @@ public class BommanGame implements GameLogic {
                 }
             }
         }
+        if (tileItem != null)
         for (Item[] items : tileItem) {
             for (Item item : items) {
                 if (item != null && item.getMesh() != null) {
@@ -240,11 +261,19 @@ public class BommanGame implements GameLogic {
             }
         }
 
+        if (player1 != null)
         player1.getMesh().cleanUp();
-        //player2.getMesh().cleanUp();
+        for (int i = 0; i < humanEnemy.length; ++i) {
+            if (!humanEnemy[i].isDead()) {
+                humanEnemy[i].getMesh().cleanUp();
+            }
+        }
+
+        if (balloom != null)
         for (int i = 0; i < balloom.length; ++i) {
             balloom[i].getMesh().cleanUp();
         }
+        if (oneal != null)
         for (int i = 0; i < oneal.length; ++i) {
             oneal[i].getMesh().cleanUp();
         }
