@@ -1,9 +1,9 @@
-package main.engine.util.math;
-
+package engine.maths;
 import java.nio.FloatBuffer;
 
 /**
  * This class represents a (x,y,z,w)-Vector. GLSL equivalent to vec4.
+ *
  */
 public class Vector4f {
 
