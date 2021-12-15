@@ -34,15 +34,18 @@ public class Renderer {
 
   private Window window;
 
+  private Camera camera;
+
 
   public Renderer() {
     transformation = new Transformation();
   }
 
-  public void init(Window window) throws Exception {
+  public void init(Window window, Camera camera) throws Exception {
     setupSceneShader();
     setupHudShader();
     this.window = window;
+    this.camera = camera;
   }
 
   private void setupSceneShader() throws Exception {
@@ -56,8 +59,7 @@ public class Renderer {
     sceneShaderProgram.createUniform("projectionMatrix");
     sceneShaderProgram.createUniform("modelViewMatrix");
     sceneShaderProgram.createUniform("texture_sampler");
-    // Create uniform for material
-    sceneShaderProgram.createMaterialUniform("material");
+
   }
 
   private void setupHudShader() throws Exception {
@@ -93,7 +95,14 @@ public class Renderer {
   }
 
   public void render(GameItem gameItem) {
-
+    if (gameItem.getMesh() != null) {
+      // Set model view matrix for this item
+      Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+      Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
+      sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+      // Render the mes for this game item
+      gameItem.getMesh().render();
+    }
   }
 
   public void renderScene(Window window, Camera camera, GameItem[] gameItems) {
@@ -156,5 +165,10 @@ public class Renderer {
     if (hudShaderProgram != null) {
       hudShaderProgram.cleanup();
     }
+  }
+
+  public void finishRender() {
+    sceneShaderProgram.setUniform("texture_sampler", 0);
+    sceneShaderProgram.unbind();
   }
 }
