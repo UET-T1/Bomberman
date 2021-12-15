@@ -19,7 +19,7 @@ public class Bomb extends GameItem {
   private float durationTime; //duration time of bomb
   private float timeToBoom;// acuracy time to "BOOM"
   private boolean isShow;
-  private Texture bombTexture = new Texture("src/main/engine/testGUI/bomb.png");
+  private Texture bombTexture = new Texture("resources/textures/bomb.png");
 
   {
 

@@ -10,7 +10,7 @@ import engine.graphics.Texture;
 
 public class Wall extends GameItem {
 
-  private Texture wallTexture = new Texture("src/main/engine/testGUI/square.jpg");
+  private Texture wallTexture = new Texture("resources/textures/square.jpg");
 
   {
     textCoords = new float[]{

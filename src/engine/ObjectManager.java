@@ -188,20 +188,19 @@ public class ObjectManager {
           gate.setPosition(x, y, 0);
         }
       }
-
-      durationTimeBomb = 2.0f;
-      durationTimeFlame = 0.5f;
-
-      soundMgr = new SoundManager();
-      soundMgr.init();
-      soundMgr.setAttenuationModel(AL11.AL_EXPONENT_DISTANCE);
-      setupSounds();
     }
+    durationTimeBomb = 2.0f;
+    durationTimeFlame = 0.5f;
+
+    soundMgr = new SoundManager();
+    soundMgr.init();
+    soundMgr.setAttenuationModel(AL11.AL_EXPONENT_DISTANCE);
+    setupSounds();
   }
 
   public static void setupSounds() throws Exception {
 
-    SoundBuffer bombSound = new SoundBuffer("src/main/engine/testGUI/bombsound.ogg");
+    SoundBuffer bombSound = new SoundBuffer("resources/sounds/bombSound.ogg");
     soundMgr.addSoundBuffer(bombSound);
     SoundSource sourceBeep = new SoundSource(false, true);
     sourceBeep.setBuffer(bombSound.getBufferId());

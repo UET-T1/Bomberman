@@ -32,8 +32,8 @@ public class Player extends GameItem implements Movable, Auto {
   private final int STAY = 3;
   public Map<String, Integer> characters = new HashMap<>();
   public Texture[] textures = {
-      new Texture("src/main/engine/testGUI/capA.png"),
-      new Texture("src/main/engine/testGUI/deadpool.png")
+      new Texture("resources/textures/capA.png"),
+      new Texture("resources/textures/deadpool.png")
   };
   protected Vector3f targetPosition;// target position
   protected String chaseDiection = "";// chase direction

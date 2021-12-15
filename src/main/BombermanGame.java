@@ -68,7 +68,7 @@ public class BombermanGame implements IGameLogic {
   @Override
   public void init(Window window) throws Exception {
     renderer.init(window);
-    createMap("src/resources/map/level" + (int) (dem / 10) + (dem % 10) + "0.json");
+    createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + "0.json");
     camera.setPosition(width / 2, height / 2, Math.max(width, height));
   }
 

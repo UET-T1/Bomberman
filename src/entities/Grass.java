@@ -10,7 +10,7 @@ import engine.graphics.Texture;
 
 public class Grass extends GameItem {
 
-  private Texture grassTexture = new Texture("src/main/engine/testGUI/grassblock.png");
+  private Texture grassTexture = new Texture("resources/textures/grassblock.png");
 
   {
     textCoords = new float[]{

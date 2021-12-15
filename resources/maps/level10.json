@@ -1,0 +1,61 @@
+{
+    "name": "Stage 2, Level 11 - The Grand Canyon",
+	"img": "bomberman-assets/imgs/levels/level-10.png",
+    "height": 12,
+    "width": 16,
+	"time": 150,
+	"wallGenPercent": 30,
+    "objects": {
+		"outside": ".",
+        "empty": " ",
+        "player": "p",
+        "wall": "w",
+        "block": "b",
+        "crispy": "c",
+        "flag": "f",
+        "end": "e",
+		"safe": "_",
+        "enemyBasic": "0",
+        "enemyWithEye": "1",
+        "enemyFollow": "2",
+        "enemyFly": "3",
+        "enemyCrispy": "4",
+        "enemyFrog": "5"
+    },
+    "map": [
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" },
+        { "0": "w c     f      w", "1": "w    b   3    bw" },
+        { "0": "wc       c     w", "1": "w              w" },
+        { "0": "w  c   ww      w", "1": "wb     ww      w" },
+        { "0": "wc     ww  c   w", "1": "w 3    ww      w" },
+        { "0": "w   c  ww      w", "1": "w      ww      w" },
+        { "0": "w    c ww      w", "1": "w           3  w" },
+        { "0": "w c    ww b    w", "1": "w      ww      w" },
+        { "0": "w   b  ww _    w", "1": "w     3ww      w" },
+        { "0": "wc  cewwww0c__ w", "1": "w     wwww  bbbw" },
+        { "0": "w 0 wwwwwwfbp_ w", "1": "w   wwwwww     w" },
+        { "0": "wwwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwwww" }
+    ],
+    "bonus": {
+        "life": {
+            "chance": 10,
+            "nb": 2
+        },
+        "speed": {
+            "chance": 10,
+            "nb": 1
+        },
+        "shield": {
+            "chance": 5,
+            "nb": 1
+        },
+        "time": {
+            "chance": 20,
+            "nb": 1
+        },
+        "points": {
+            "chance": 15,
+            "nb": -1
+        }
+    }
+}

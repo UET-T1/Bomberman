@@ -17,7 +17,7 @@ public class Flame extends GameItem {
   private Timer time; // calculate the time to stop "BOOM"
   private boolean isStart; //true if bomb is start
   private float durationTime;// duration time of flame
-  private Texture flameTexture = new Texture("src/main/engine/testGUI/flame.jpg");
+  private Texture flameTexture = new Texture("resources/textures/flame.jpg");
 
   {
 

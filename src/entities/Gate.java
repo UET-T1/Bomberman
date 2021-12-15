@@ -10,7 +10,7 @@ import engine.graphics.Texture;
 
 public class Gate extends GameItem {
 
-  private Texture gateTexture = new Texture("src/main/engine/testGUI/gate.jpg");
+  private Texture gateTexture = new Texture("resources/textures/gate.jpg");
 
   {
     textCoords = new float[]{
