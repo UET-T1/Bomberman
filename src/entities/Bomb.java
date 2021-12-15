@@ -19,17 +19,22 @@ public class Bomb extends GameItem {
   private float durationTime; //duration time of bomb
   private float timeToBoom;// acuracy time to "BOOM"
   private boolean isShow;
-  private Texture bombTexture = new Texture("resources/textures/bomb.png");
+  private static Texture bombTexture;
 
-  {
-
-    textCoords = new float[]{
-        0.5f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 0.5f,
-        0.5f, 0.5f};
-    mesh = new Mesh(positions, textCoords, indices, bombTexture);
+  static {
+    try {
+      textCoords = new float[]{
+          0.5f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 0.5f,
+          0.5f, 0.5f};
+      bombTexture = new Texture("resources/textures/bomb.png");
+      mesh = new Mesh(positions, textCoords, indices, bombTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Bomb(Mesh mesh, float durationTime) throws Exception {
     super(mesh);

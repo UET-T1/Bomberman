@@ -17,17 +17,22 @@ public class Balloom extends GameItem implements Movable {
   private boolean isDead;
   private boolean chaseStat;
   private Vector3f nextPosition;
-  private Texture balloomTexture = new Texture("resources/textures/balloom.jpg");
+  private static Texture balloomTexture;
 
-  {
-
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, balloomTexture);
+  static {
+    try {
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      balloomTexture = new Texture("resources/textures/balloom.jpg");
+      mesh = new Mesh(positions, textCoords, indices, balloomTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Balloom(Mesh mesh) throws Exception {
     super(mesh);

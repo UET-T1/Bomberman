@@ -2,12 +2,13 @@ package engine;
 
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
+import engine.graphics.Texture;
 import org.joml.Vector3f;
 
 public abstract class GameItem implements Observable, Collidable {
 
   protected final Vector3f position;
-  protected Mesh mesh;
+  protected static Mesh mesh;
   protected float scale;
 
   protected Vector3f rotation;
@@ -18,9 +19,9 @@ public abstract class GameItem implements Observable, Collidable {
 
   protected boolean chaseStat;// true if item not go full one square
 
-  protected int[] indices = new int[]{
+  protected static int[] indices = new int[]{
       0, 1, 3, 3, 1, 2};
-  protected float[] positions = new float[]{
+  protected static float[] positions = new float[]{
       // V0
       1.0f, -1.0f, 1.0f,
       // V1
@@ -30,7 +31,7 @@ public abstract class GameItem implements Observable, Collidable {
       // V3
       0.0f, -1.0f, 1.0f};
 
-  protected float[] textCoords;
+  protected static float[] textCoords;
 
   public GameItem(Mesh mesh) {
     this.mesh = mesh;

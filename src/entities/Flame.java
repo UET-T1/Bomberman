@@ -17,16 +17,20 @@ public class Flame extends GameItem {
   private Timer time; // calculate the time to stop "BOOM"
   private boolean isStart; //true if bomb is start
   private float durationTime;// duration time of flame
-  private Texture flameTexture = new Texture("resources/textures/flame.jpg");
+  private static Texture flameTexture;
 
-  {
-
-    textCoords = new float[]{
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, flameTexture);
+  static {
+    try {
+      flameTexture = new Texture("resources/textures/flame.jpg");
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      mesh = new Mesh(positions, textCoords, indices, flameTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   //Constructor

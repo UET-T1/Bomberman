@@ -10,16 +10,22 @@ import engine.graphics.Texture;
 
 public class Grass extends GameItem {
 
-  private Texture grassTexture = new Texture("resources/textures/grassblock.png");
+  private static Texture grassTexture;
 
-  {
-    textCoords = new float[]{
-        0.0f, 0.5f,
-        0.5f, 0.5f,
-        0.5f, 1.0f,
-        0.0f, 1.0f};
-    mesh = new Mesh(positions, textCoords, indices, grassTexture);
+  static {
+    try {
+      grassTexture = new Texture("resources/textures/grassblock.png");
+      textCoords = new float[]{
+          0.0f, 0.5f,
+          0.5f, 0.5f,
+          0.5f, 1.0f,
+          0.0f, 1.0f};
+      mesh = new Mesh(positions, textCoords, indices, grassTexture);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
+
 
   public Grass() throws Exception {
     super();

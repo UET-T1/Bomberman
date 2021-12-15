@@ -13,16 +13,30 @@ public class Item extends GameItem {
   public static final int speedItem = 1;
   public static final int powerItem = 2;
   public int type;
-  float[] textCoords = new float[]{
-      0.0f, 0.0f,
-      1.0f, 0.0f,
-      1.0f, 1.0f,
-      0.0f, 1.0f};
-  private Texture[] textures = {
-      new Texture("resources/textures/bombItem.jpg"),
-      new Texture("resources/textures/speedItem.jpg"),
-      new Texture("resources/textures/powerItem.jpg")
-  };
+  private static Texture[] textures;
+  private static Mesh[] meshes;
+  static {
+    try {
+      textures = new Texture[]{
+          new Texture("resources/textures/bombItem.jpg"),
+          new Texture("resources/textures/speedItem.jpg"),
+          new Texture("resources/textures/powerItem.jpg")
+      };
+      textCoords = new float[]{
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      meshes = new Mesh[] {
+          new Mesh(positions, textCoords, indices, textures[bombItem]),
+          new Mesh(positions, textCoords, indices, textures[speedItem]),
+          new Mesh(positions, textCoords, indices, textures[powerItem])
+      };
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private int function;
   private boolean visible;
 
@@ -34,7 +48,7 @@ public class Item extends GameItem {
 
   public Item(int type) throws Exception {
     super();
-    mesh = new Mesh(positions, textCoords, indices, textures[type]);
+    mesh = meshes[type];
     visible = false;
     this.function = type + 1;
   }

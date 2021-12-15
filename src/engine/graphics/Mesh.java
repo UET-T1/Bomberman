@@ -185,7 +185,6 @@ public class Mesh {
   }
 
   public void render() {
-    Texture texture = material.getTexture();
     if (texture != null) {
       // Activate firs texture bank
       glActiveTexture(GL_TEXTURE0);
@@ -213,7 +212,6 @@ public class Mesh {
     }
 
     // Delete the texture
-    Texture texture = material.getTexture();
     if (texture != null) {
       texture.cleanup();
     }
