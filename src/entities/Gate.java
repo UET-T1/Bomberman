@@ -11,6 +11,7 @@ import engine.graphics.Texture;
 public class Gate extends GameItem {
 
   private static Texture gateTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -33,7 +34,7 @@ public class Gate extends GameItem {
   }
 
   public Gate() throws Exception {
-    super();
+    this(mesh);
   }
 
   @Override

@@ -18,6 +18,7 @@ public class Flame extends GameItem {
   private boolean isStart; //true if bomb is start
   private float durationTime;// duration time of flame
   private static Texture flameTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -42,10 +43,7 @@ public class Flame extends GameItem {
   }
 
   public Flame(float durationTime) throws Exception {
-    super();
-    time = new Timer();
-    this.durationTime = durationTime;
-    timeToBoom = new float[0];
+    this(mesh, durationTime);
   }
 
   //check if bomb is start?

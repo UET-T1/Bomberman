@@ -18,6 +18,7 @@ public class Balloom extends GameItem implements Movable {
   private boolean chaseStat;
   private Vector3f nextPosition;
   private static Texture balloomTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -42,10 +43,7 @@ public class Balloom extends GameItem implements Movable {
   }
 
   public Balloom() throws Exception {
-    super();
-    isDead = true;
-    chaseStat = false;
-    nextPosition = null;
+    this(mesh);
   }
 
   @Override

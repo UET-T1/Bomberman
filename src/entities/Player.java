@@ -70,6 +70,7 @@ public class Player extends GameItem implements Movable, Auto {
   private Bomb inBomb;// bomb in leg of object
   private int bombPower;
   private Timer time = new Timer();
+  private static Mesh mesh;
 
 
 
@@ -85,15 +86,7 @@ public class Player extends GameItem implements Movable, Auto {
   }
 
   public Player(String character) throws Exception {
-    super();
-    mesh = meshes[characters.get(character)];
-    autoMode = false;
-    bombsOfMe = new Bomb[1];
-    bombPower = 1;
-    isDead = false;
-    status = FIND;
-    isInBomb = false;
-    targetPosition = new Vector3f(8, 8, 0);
+    this(meshes[characters.get(character)]);
   }
 
   @Override

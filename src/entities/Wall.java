@@ -11,6 +11,7 @@ import engine.graphics.Texture;
 public class Wall extends GameItem {
 
   private static Texture wallTexture;
+  private static Mesh mesh;
 
   static {
     try {
@@ -28,7 +29,7 @@ public class Wall extends GameItem {
 
 
   public Wall() throws Exception {
-    super();
+    this(mesh);
   }
 
   public Wall(Mesh mesh) throws Exception {
