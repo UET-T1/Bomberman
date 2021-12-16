@@ -42,7 +42,7 @@ public class Player extends GameItem implements Movable, Auto {
     try {
       textures = new Texture[]{
           new Texture("resources/textures/capA.png"),
-          new Texture("resources/textures/deadpool1.png")
+          new Texture("resources/textures/eraeser.png")
       };
       textCoords = new float[]{
           0.0f, 0.0f,
