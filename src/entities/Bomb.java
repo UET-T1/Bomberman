@@ -25,11 +25,11 @@ public class Bomb extends GameItem {
   static {
     try {
       textCoords = new float[]{
-          0.5f, 0.0f,
+          0.0f, 0.0f,
           1.0f, 0.0f,
-          1.0f, 0.5f,
-          0.5f, 0.5f};
-      bombTexture = new Texture("resources/textures/bomb.png");
+          1.0f, 1.0f,
+          0.0f, 1.0f};
+      bombTexture = new Texture("resources/textures/bomb1.png");
       mesh = new Mesh(positions, textCoords, indices, bombTexture);
     } catch (Exception e) {
       e.printStackTrace();

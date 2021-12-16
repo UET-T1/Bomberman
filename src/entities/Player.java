@@ -42,7 +42,7 @@ public class Player extends GameItem implements Movable, Auto {
     try {
       textures = new Texture[]{
           new Texture("resources/textures/capA.png"),
-          new Texture("resources/textures/deadpool.png")
+          new Texture("resources/textures/deadpool1.png")
       };
       textCoords = new float[]{
           0.0f, 0.0f,
@@ -113,11 +113,14 @@ public class Player extends GameItem implements Movable, Auto {
   public void move(Window window, Input input) {
     if (input.isKeyDown(GLFW_KEY_LEFT)) {
       moveLeft();
-    } else if (input.isKeyDown(GLFW_KEY_RIGHT)) {
+    } 
+    if (input.isKeyDown(GLFW_KEY_RIGHT)) {
       moveRight();
-    } else if (input.isKeyDown(GLFW_KEY_UP)) {
+    } 
+    if (input.isKeyDown(GLFW_KEY_UP)) {
       moveUp();
-    } else if (input.isKeyDown(GLFW_KEY_DOWN)) {
+    } 
+    if (input.isKeyDown(GLFW_KEY_DOWN)) {
       moveDown();
     }
   }
@@ -144,10 +147,10 @@ public class Player extends GameItem implements Movable, Auto {
     pos.x += speed;
     if (!ObjectManager.checkCollision(pos.x, pos.y, isInBomb, inBomb, this)) {
       float res = (float) (pos.y - Math.floor(pos.y));
-      if (res >= 0.6f && ObjectManager.checkCollision(pos.x, pos.y - res + 1, isInBomb, inBomb,
+      if (res >= 0.5f && ObjectManager.checkCollision(pos.x, pos.y - res + 1, isInBomb, inBomb,
           this)) {
         pos.y = pos.y - res + 1;
-      } else if (res <= 0.4f && ObjectManager.checkCollision(pos.x, pos.y - res, isInBomb, inBomb,
+      } else if (res <= 0.5f && ObjectManager.checkCollision(pos.x, pos.y - res, isInBomb, inBomb,
           this)) {
         pos.y = pos.y - res;
       } else {
@@ -164,10 +167,10 @@ public class Player extends GameItem implements Movable, Auto {
     pos.x -= speed;
     if (!ObjectManager.checkCollision(pos.x, pos.y, isInBomb, inBomb, this)) {
       float res = (float) (pos.y - Math.floor(pos.y));
-      if (res >= 0.6f && ObjectManager.checkCollision(pos.x, pos.y - res + 1, isInBomb, inBomb,
+      if (res >= 0.5f && ObjectManager.checkCollision(pos.x, pos.y - res + 1, isInBomb, inBomb,
           this)) {
         pos.y = pos.y - res + 1;
-      } else if (res <= 0.4f && ObjectManager.checkCollision(pos.x, pos.y - res, isInBomb, inBomb,
+      } else if (res <= 0.5f && ObjectManager.checkCollision(pos.x, pos.y - res, isInBomb, inBomb,
           this)) {
         pos.y = pos.y - res;
       } else {
@@ -184,10 +187,10 @@ public class Player extends GameItem implements Movable, Auto {
     pos.y += speed;
     if (!ObjectManager.checkCollision(pos.x, pos.y, isInBomb, inBomb, this)) {
       float res = (float) (pos.x - Math.floor(pos.x));
-      if (res >= 0.6f && ObjectManager.checkCollision(pos.x - res + 1, pos.y, isInBomb, inBomb,
+      if (res >= 0.5f && ObjectManager.checkCollision(pos.x - res + 1, pos.y, isInBomb, inBomb,
           this)) {
         pos.x = pos.x - res + 1;
-      } else if (res <= 0.4f && ObjectManager.checkCollision(pos.x - res, pos.y, isInBomb, inBomb,
+      } else if (res <= 0.5f && ObjectManager.checkCollision(pos.x - res, pos.y, isInBomb, inBomb,
           this)) {
         pos.x = pos.x - res;
       } else {
@@ -204,10 +207,10 @@ public class Player extends GameItem implements Movable, Auto {
     pos.y -= speed;
     if (!ObjectManager.checkCollision(pos.x, pos.y, isInBomb, inBomb, this)) {
       float res = (float) (pos.x - Math.floor(pos.x));
-      if (res >= 0.6f && ObjectManager.checkCollision(pos.x - res + 1, pos.y, isInBomb, inBomb,
+      if (res >= 0.5f && ObjectManager.checkCollision(pos.x - res + 1, pos.y, isInBomb, inBomb,
           this)) {
         pos.x = pos.x - res + 1;
-      } else if (res <= 0.4f && ObjectManager.checkCollision(pos.x - res, pos.y, isInBomb, inBomb,
+      } else if (res <= 0.5f && ObjectManager.checkCollision(pos.x - res, pos.y, isInBomb, inBomb,
           this)) {
         pos.x = pos.x - res;
       } else {

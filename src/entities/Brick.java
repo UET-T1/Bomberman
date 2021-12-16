@@ -20,7 +20,7 @@ public class Brick extends GameItem {
 
   static {
     try {
-      brickTexture = new Texture("resources/textures/grassblock.png");
+      brickTexture = new Texture("resources/textures/brick1.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
