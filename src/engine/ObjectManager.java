@@ -67,7 +67,6 @@ public class ObjectManager {
   public static Item[][] getTileItem() {
     return tileItem;
   }
-
   public static Player getPlayer1() {
     return player1;
   }
