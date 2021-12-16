@@ -10,6 +10,8 @@ import engine.IHud;
 import engine.Utils;
 import engine.Window;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 public class Renderer {
 
@@ -87,11 +89,13 @@ public class Renderer {
       window.setResized(false);
     }
 
+    GL11.glEnable(GL13.GL_SAMPLE_ALPHA_TO_COVERAGE);
     renderScene(window, camera, gameItems);
 		if (hud == null) {
 			return;
 		}
     renderHud(window, hud);
+    GL11.glDisable(GL13.GL_SAMPLE_ALPHA_TO_COVERAGE);
   }
 
   public void render(GameItem gameItem) {
