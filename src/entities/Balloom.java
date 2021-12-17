@@ -27,7 +27,7 @@ public class Balloom extends GameItem implements Movable {
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      balloomTexture = new Texture("resources/textures/balloom.jpg");
+      balloomTexture = new Texture("resources/textures/pencil.png");
       mesh = new Mesh(positions, textCoords, indices, balloomTexture);
     } catch (Exception e) {
       e.printStackTrace();
@@ -37,7 +37,7 @@ public class Balloom extends GameItem implements Movable {
 
   public Balloom(Mesh mesh) throws Exception {
     super(mesh);
-    isDead = true;
+    isDead = false;
     chaseStat = false;
     nextPosition = null;
   }

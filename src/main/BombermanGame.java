@@ -20,7 +20,7 @@ import entities.Player;
 
 public class BombermanGame implements IGameLogic {
 
-  public static int dem = 0;
+  public static int dem = 22;
   private static GameItem[][] tileMap;
   private static Brick[][] tileBrick;
   private static Bomb[][] tileBomb;
@@ -63,13 +63,13 @@ public class BombermanGame implements IGameLogic {
     for (int i = 0; i < humanEnemy.length; ++i) {
       humanEnemy[i].setSpeed(0.1f);
     }
+    camera.setPosition((float)width/2, (float)height/2, Math.max(width, height));
   }
 
   @Override
   public void init(Window window) throws Exception {
     renderer.init(window, camera);
     createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
-    camera.setPosition((float)width / 2, (float)height / 2, Math.max(width, height));
   }
 
   @Override
@@ -84,8 +84,6 @@ public class BombermanGame implements IGameLogic {
     } else {
       createMap("resources/maps/level" + (int) (dem / 10) + (dem % 10) + ".json");
     }
-    //camera.setPosition(width/2 + 1, height/2 + 10, Math.max(width, height)); //Math.max(width, height)
-    //camera.setPosition(5.0f, 5.0f, 100f);
 
     if (!player1.isDead()) {
       if (input.isKeyDown(GLFW_KEY_A)) {
@@ -206,6 +204,7 @@ public class BombermanGame implements IGameLogic {
     }
 
     gate.render(renderer);
+
 
     for (Item[] items : tileItem) {
       for (Item item : items) {

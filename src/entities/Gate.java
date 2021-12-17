@@ -15,7 +15,7 @@ public class Gate extends GameItem {
 
   static {
     try {
-      gateTexture = new Texture("resources/textures/gate.jpg");
+      gateTexture = new Texture("resources/textures/gate.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,

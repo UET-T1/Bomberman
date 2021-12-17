@@ -22,7 +22,7 @@ public class Flame extends GameItem {
 
   static {
     try {
-      flameTexture = new Texture("resources/textures/flame.jpg");
+      flameTexture = new Texture("resources/textures/flame.png");
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
