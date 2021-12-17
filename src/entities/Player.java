@@ -16,6 +16,7 @@ import engine.Pair;
 import engine.Timer;
 import engine.Utils;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -26,16 +27,16 @@ import org.joml.Vector3f;
 
 public class Player extends GameItem implements Movable, Auto {
 
-  private final int PUTABOMB = 1;//SEARCH status for findWay function
-  private final int GOTOSAFEPOS = 0;//BREAKWALL status for findWay function
-  private final int FIND = 2;
-  private final int STAY = 3;
   public static Map<String, Integer> characters = new HashMap<>();
+  public static Texture[] textures;
   private static Mesh[] meshes;
+  private static Mesh mesh;
+  private static Animation animation;
+  private static Animation[] animationList;
+
   static {
     characters.put("Deadpool", 0);
   }
-  public static Texture[] textures;
 
   static {
     try {
@@ -47,14 +48,23 @@ public class Player extends GameItem implements Movable, Auto {
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      meshes = new Mesh[] {
+      meshes = new Mesh[]{
           new Mesh(positions, textCoords, indices, textures[0])
       };
+      /*
+      animationList = new Animation[] {
+          new Animation(amount, fps, fileName1, positions, textCoords, indices);
+      }
+       */
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
+  private final int PUTABOMB = 1;//SEARCH status for findWay function
+  private final int GOTOSAFEPOS = 0;//BREAKWALL status for findWay function
+  private final int FIND = 2;
+  private final int STAY = 3;
   protected Vector3f targetPosition;// target position
   protected String chaseDiection = "";// chase direction
   protected int dem = 0;// the number of step to go full one square
@@ -67,8 +77,6 @@ public class Player extends GameItem implements Movable, Auto {
   private Bomb inBomb;// bomb in leg of object
   private int bombPower;
   private Timer time = new Timer();
-  private static Mesh mesh;
-
 
 
   public Player(Mesh mesh) throws Exception {
@@ -84,6 +92,18 @@ public class Player extends GameItem implements Movable, Auto {
 
   public Player(String character) throws Exception {
     this(meshes[characters.get(character)]);
+    //this(animationList[characters.get(character)]);
+  }
+
+  public Player(Animation animation) {
+    super(animation);
+    autoMode = true;
+    bombsOfMe = new Bomb[1];
+    bombPower = 1;
+    isDead = false;
+    status = FIND;
+    isInBomb = false;
+    targetPosition = new Vector3f(8, 8, 0);
   }
 
   @Override
@@ -110,13 +130,13 @@ public class Player extends GameItem implements Movable, Auto {
   public void move(Window window, Input input) {
     if (input.isKeyDown(GLFW_KEY_LEFT)) {
       moveLeft();
-    } 
+    }
     if (input.isKeyDown(GLFW_KEY_RIGHT)) {
       moveRight();
-    } 
+    }
     if (input.isKeyDown(GLFW_KEY_UP)) {
       moveUp();
-    } 
+    }
     if (input.isKeyDown(GLFW_KEY_DOWN)) {
       moveDown();
     }
@@ -253,19 +273,19 @@ public class Player extends GameItem implements Movable, Auto {
         nextPosition = null;
         if (search()) {
           if (status != FIND) {
-              if (time.getTime() - time.getLastLoopTime() > 2.7f) {
-                  status = FIND;
-              } else {
-                  status = STAY;
-              }
+            if (time.getTime() - time.getLastLoopTime() > 2.7f) {
+              status = FIND;
+            } else {
+              status = STAY;
+            }
           }
         } else {
           if (!isFullBomb()) {
-              if (time.getTime() - time.getLastLoopTime() > 2.7f) {
-                  findBrick();
-              } else {
-                  findSafePos();
-              }
+            if (time.getTime() - time.getLastLoopTime() > 2.7f) {
+              findBrick();
+            } else {
+              findSafePos();
+            }
           } else {
             time.init();
             findSafePos();
@@ -295,9 +315,9 @@ public class Player extends GameItem implements Movable, Auto {
     int bombY = (int) bombPos.y;
     if (input.isKeyDown(GLFW_KEY_SPACE) && !ObjectManager.isStartOfBomb(bombX, bombY)
         && !autoMode) {
-        if (!isFullBomb()) {
-            putABomb();
-        }
+      if (!isFullBomb()) {
+        putABomb();
+      }
     }
   }
 
@@ -398,9 +418,9 @@ public class Player extends GameItem implements Movable, Auto {
     while (queue.size() > 0) {
 
       current = queue.poll();
-        if (current.value.equals(targetPosition)) {
-            break;
-        }
+      if (current.value.equals(targetPosition)) {
+        break;
+      }
 
       int numsOfSquare = 0;
       Node point = current;

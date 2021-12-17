@@ -99,6 +99,7 @@ public class Renderer {
   }
 
   public void render(GameItem gameItem) {
+    // Mesh mesh = gameItem.getAnimation().getCurrentMesh();
     if (gameItem.getMesh() != null) {
       // Set model view matrix for this item
       Matrix4f viewMatrix = transformation.getViewMatrix(camera);

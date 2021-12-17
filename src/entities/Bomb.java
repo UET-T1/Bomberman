@@ -5,6 +5,7 @@ import engine.Input;
 import engine.ObjectManager;
 import engine.Timer;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -21,6 +22,7 @@ public class Bomb extends GameItem {
   private boolean isShow;
   private static Texture bombTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -31,6 +33,9 @@ public class Bomb extends GameItem {
           0.0f, 1.0f};
       bombTexture = new Texture("resources/textures/bomb.png");
       mesh = new Mesh(positions, textCoords, indices, bombTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -48,6 +53,7 @@ public class Bomb extends GameItem {
 
   public Bomb(float durationTime) throws Exception {
     this(mesh, durationTime);
+    //this(animation, durationTime);
   }
 
   public Bomb(Bomb bomb) throws Exception {
@@ -59,6 +65,14 @@ public class Bomb extends GameItem {
     this.isShow = bomb.isShow();
   }
 
+  public Bomb(Animation animation, float durationTime) {
+    super(animation);
+    time = new Timer();
+    power = 1;
+    this.durationTime = durationTime;
+    isStart = false;
+    isShow = false;
+  }
 
   public float getTime() {
     return (float) (time.getTime() - time.getLastLoopTime());

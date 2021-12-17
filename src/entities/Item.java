@@ -3,6 +3,7 @@ package entities;
 import engine.GameItem;
 import engine.Input;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -16,6 +17,8 @@ public class Item extends GameItem {
   private static Texture[] textures;
   private static Mesh[] meshes;
   private static Mesh mesh;
+  private static Animation animation;
+  private static Animation[] animationList;
   static {
     try {
       textures = new Texture[]{
@@ -33,6 +36,13 @@ public class Item extends GameItem {
           new Mesh(positions, textCoords, indices, textures[speedItem]),
           new Mesh(positions, textCoords, indices, textures[powerItem])
       };
+      /*
+      animationList = new Animation[] {
+          new Animation(amount, fps, fileName1, positions, textCoords, indices),
+          new Animation(amount, fps, fileName2, positions, textCoords, indices),
+          new Animation(amount, fps, fileName3, positions, textCoords, indices)
+      }
+       */
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -47,8 +57,16 @@ public class Item extends GameItem {
     this.function = function;
   }
 
+  public Item(Animation animation, int function) {
+    super(animation);
+    visible = false;
+    this.function = function;
+  }
+
   public Item(int type) throws Exception {
     this(meshes[type], type + 1);
+    // TO-DO: fix mapping
+    //this(animationList[type], type + 1);
   }
 
   @Override

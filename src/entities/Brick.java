@@ -6,6 +6,7 @@ import engine.Input;
 import engine.ObjectManager;
 import engine.Utils;
 import engine.Window;
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -17,6 +18,7 @@ public class Brick extends GameItem {
 
   private static Texture brickTexture;
   private static Mesh mesh;
+  private static Animation animation;
 
   static {
     try {
@@ -27,6 +29,9 @@ public class Brick extends GameItem {
           1.0f, 1.0f,
           0.0f, 1.0f};
       mesh = new Mesh(positions, textCoords, indices, brickTexture);
+      // remove mesh and active the following comment
+      // hard-coded
+      //animation = new Animation(amount, fps, fileName, positions, textureCoords, indices);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -40,6 +45,12 @@ public class Brick extends GameItem {
 
   public Brick() throws Exception {
     this(mesh);
+    //this(animation);
+  }
+
+  public Brick(Animation animation) {
+    super(animation);
+    visible = true;
   }
 
   public boolean getVisible() {

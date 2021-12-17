@@ -1,5 +1,6 @@
 package engine;
 
+import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Texture;
@@ -10,6 +11,8 @@ public abstract class GameItem implements Observable, Collidable {
   protected final Vector3f position;
   protected Mesh meshItem;
   protected float scale;
+
+  protected Animation animation;
 
   protected Vector3f rotation;
 
@@ -44,6 +47,11 @@ public abstract class GameItem implements Observable, Collidable {
     position = new Vector3f();
     scale = 1;
     rotation = new Vector3f();
+  }
+
+  public GameItem(Animation animation) {
+    this();
+    this.animation = animation;
   }
 
   public Vector3f getPosition() {
