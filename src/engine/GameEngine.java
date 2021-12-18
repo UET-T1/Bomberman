@@ -1,4 +1,5 @@
 package engine;
+import engine.network.*;
 
 public class GameEngine implements Runnable {
 
@@ -13,6 +14,7 @@ public class GameEngine implements Runnable {
   private final IGameLogic gameLogic;
 
   private final Input input;
+
 
   public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic)
       throws Exception {
@@ -46,8 +48,7 @@ public class GameEngine implements Runnable {
     float accumulator = 0f;
     float interval = 1f / TARGET_UPS;
 
-    boolean running = true;
-    while (running && !window.windowShouldClose()) {
+    while (!window.windowShouldClose()) {
       elapsedTime = timer.getElapsedTime();
       accumulator += elapsedTime;
 
@@ -64,6 +65,8 @@ public class GameEngine implements Runnable {
         sync();
       }
     }
+
+    Client.terminate();
   }
 
   protected void cleanup() {
