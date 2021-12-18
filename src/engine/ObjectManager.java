@@ -4,16 +4,20 @@ import engine.sound.SoundBuffer;
 import engine.sound.SoundListener;
 import engine.sound.SoundManager;
 import engine.sound.SoundSource;
-import entities.Balloom;
+import entities.Pencil;
 import entities.Bomb;
 import entities.Brick;
 import entities.Flame;
 import entities.Gate;
 import entities.Grass;
+import entities.Ink;
 import entities.Item;
-import entities.Oneal;
+import entities.Menu;
+import entities.PenA;
 import entities.Player;
 import entities.Wall;
+import entities.Witch;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,10 +39,13 @@ public class ObjectManager {
   public static Flame[][] tileFlame;
   public static Item[][] tileItem;
   public static Player player1;
-  public static Balloom[] balloom;
-  public static Oneal[] oneal;
+  public static Pencil[] pencil;
+  public static PenA[] penA;
   public static Gate gate;
+  public static Ink[] ink;
+  public static Witch[] witch;
   public static Player[] humanEnemy;
+  public static Menu menu;
   public static int width;
   public static int height;
   public static float durationTimeBomb;
@@ -71,12 +78,12 @@ public class ObjectManager {
     return player1;
   }
 
-  public static Balloom[] getBalloom() {
-    return balloom;
+  public static Pencil[] getPencil() {
+    return pencil;
   }
 
-  public static Oneal[] getOneal() {
-    return oneal;
+  public static PenA[] getOneal() {
+    return penA;
   }
 
   public static Gate getGate() {
@@ -87,6 +94,19 @@ public class ObjectManager {
     return humanEnemy;
   }
 
+  public static Ink[] getInk() {
+    return ink;
+  }
+
+  public static Witch[] getWitch() {
+    return witch;
+  }
+
+  public static void createMenu() throws Exception {
+    menu = new Menu();
+    menu.setPosition(0, 0, -1.5f);
+  }
+  
   public static void createMap(String path) throws Exception {
     String tileMapFile = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
     JSONObject obj = new JSONObject(tileMapFile);
@@ -98,9 +118,11 @@ public class ObjectManager {
     tileFlame = new Flame[width + 1][height + 1];
     tileBomb = new Bomb[width + 1][height + 1];
     tileItem = new Item[width + 1][height + 1];
-    oneal = new Oneal[0];
-    balloom = new Balloom[0];
+    penA = new PenA[0];
+    pencil = new Pencil[0];
     humanEnemy = new Player[0];
+    ink = new Ink[0];
+    witch = new Witch[0];
 
     JSONArray array = obj.getJSONArray("map");
     for (int y = height; y >= 1; --y) {
@@ -152,24 +174,44 @@ public class ObjectManager {
           player1.setAutoMode(false);
         }
 
-        if (s.charAt(x - 1) == '0' || s.charAt(x - 1) == '2' || s.charAt(x - 1) == '4') {
-          Balloom[] newBalloom = new Balloom[balloom.length + 1];
-          for (int i = 0; i < balloom.length; ++i) {
-            newBalloom[i] = balloom[i];
+        if (s.charAt(x - 1) == '0' || s.charAt(x - 1) == '1') {
+          Pencil[] newpencil = new Pencil[pencil.length + 1];
+          for (int i = 0; i < pencil.length; ++i) {
+            newpencil[i] = pencil[i];
           }
-          balloom = newBalloom;
-          balloom[balloom.length - 1] = new Balloom();
-          balloom[balloom.length - 1].setPosition(x, y, 0);
+          pencil = newpencil;
+          pencil[pencil.length - 1] = new Pencil();
+          pencil[pencil.length - 1].setPosition(x, y, 0);
         }
 
-        if (s.charAt(x - 1) == '1' || s.charAt(x - 1) == '3' || s.charAt(x - 1) == '5') {
-          Oneal[] newOneal = new Oneal[oneal.length + 1];
-          for (int i = 0; i < oneal.length; ++i) {
-            newOneal[i] = oneal[i];
+        if (s.charAt(x - 1) == '2') {
+          PenA[] newOneal = new PenA[penA.length + 1];
+          for (int i = 0; i < penA.length; ++i) {
+            newOneal[i] = penA[i];
           }
-          oneal = newOneal;
-          oneal[oneal.length - 1] = new Oneal();
-          oneal[oneal.length - 1].setPosition(x, y, 0);
+          penA = newOneal;
+          penA[penA.length - 1] = new PenA();
+          penA[penA.length - 1].setPosition(x, y, 0);
+        }
+
+        if (s.charAt(x - 1) == '3') {
+          Ink[] newInk = new Ink[ink.length + 1];
+          for (int i = 0; i < ink.length; ++i) {
+            newInk[i] = ink[i];
+          }
+          ink = newInk;
+          ink[ink.length - 1] = new Ink();
+          ink[ink.length - 1].setPosition(x, y, 0);
+        }
+
+        if (s.charAt(x - 1) == '4' || s.charAt(x - 1) == '5') {
+          Witch[] newWitch = new Witch[witch.length + 1];
+          for (int i = 0; i < witch.length; ++i) {
+            newWitch[i] = witch[i];
+          }
+          witch = newWitch;
+          witch[witch.length - 1] = new Witch();
+          witch[witch.length - 1].setPosition(x, y, 0);
         }
 
         if (s.charAt(x - 1) == '6') {
@@ -668,6 +710,10 @@ public class ObjectManager {
     return newPair;
   }
 
+  public static void createBrick(int x, int y) {
+    tileBrick[x][y].setVisible(true);
+  }
+
   public static boolean isHaveBrick(int x2, int y2, float timeSquare, float lastTimeToReach,
       int power) throws Exception {
     for (Brick[] bricks : tileBrick) {
@@ -714,7 +760,7 @@ public class ObjectManager {
           }
       }
 
-    if (obj instanceof Oneal || obj instanceof Balloom) {
+    if (obj instanceof PenA || obj instanceof Pencil) {
       Vector3f pos = gate.getPosition();
       if (pos.x < x + 1 &&
           x < pos.x + 1 &&
@@ -782,9 +828,9 @@ public class ObjectManager {
       }
     }
 
-    for (Balloom ball : balloom) {
-      Vector3f pos = ball.getPosition();
-      if (!ball.isDead() &&
+    for (Pencil pencill : pencil) {
+      Vector3f pos = pencill.getPosition();
+      if (!pencill.isDead() &&
           pos.x < x + 1 &&
           x < pos.x + 1 &&
           pos.y < y + 1 &&
@@ -793,9 +839,20 @@ public class ObjectManager {
       }
     }
 
-    for (Oneal one : oneal) {
+    for (PenA one : penA) {
       Vector3f pos = one.getPosition();
       if (!one.isDead() &&
+          pos.x < x + 1 &&
+          x < pos.x + 1 &&
+          pos.y < y + 1 &&
+          y < pos.y + 1) {
+        return true;
+      }
+    }
+
+    for (Ink inkk : ink) {
+      Vector3f pos = inkk.getPosition();
+      if (!inkk.isDead() &&
           pos.x < x + 1 &&
           x < pos.x + 1 &&
           pos.y < y + 1 &&
@@ -848,5 +905,19 @@ public class ObjectManager {
       }
     }
     return false;
+  }
+
+  public static void lurePlayer(float x, float y) {
+    for (Witch wit : witch) {
+      Vector3f pos = wit.getPosition();
+      if (!wit.isDead() &&
+          pos.x < x + 1 &&
+          x < pos.x + 1 &&
+          pos.y < y + 1 &&
+          y < pos.y + 1) {
+        player1.lured();
+        wit.onCollapse();
+      }
+    }
   }
 }

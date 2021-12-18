@@ -26,13 +26,23 @@ public abstract class GameItem implements Observable, Collidable {
       0, 1, 3, 3, 1, 2};
   protected static float[] positions = new float[]{
       // V0
-      1.0f, -1.0f, 0.0f,
+      0.0f, 1.0f, 0.0f,
       // V1
-      1.0f, 0.0f, 0.0f,
+      1.0f, 1.0f, 0.0f,
       // V2
-      0.0f, 0.0f, 0.0f,
+      1.0f, 0.0f, 0.0f,
       // V3
-      0.0f, -1.0f, 0.0f};
+      0.0f, 0.0f, 0.0f};
+
+  protected static float[] menuPositions = new float[]{
+      // V0
+      -16.0f, 9.0f, 0.0f,
+      // V1
+      16.0f, 9.0f, 0.0f,
+      // V2
+      16.0f, -9.0f, 0.0f,
+      // V3
+      -16.0f, -9.0f, 0.0f};
 
   protected static float[] textCoords;
 

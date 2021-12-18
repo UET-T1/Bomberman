@@ -19,7 +19,6 @@ import engine.Window;
 import engine.graphics.Animation;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
-import engine.graphics.Texture;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -28,10 +27,6 @@ import org.joml.Vector3f;
 public class Player extends GameItem implements Movable, Auto {
 
   public static Map<String, Integer> characters = new HashMap<>();
-  public static Texture[] textures;
-  private static Mesh[] meshes;
-  private static Mesh mesh;
-  private static Animation animation;
   private static Animation[] animationList;
 
   static {
@@ -40,27 +35,22 @@ public class Player extends GameItem implements Movable, Auto {
 
   static {
     try {
-      textures = new Texture[]{
-          new Texture("resources/textures/eraeser.png")
-      };
       textCoords = new float[]{
           0.0f, 0.0f,
           1.0f, 0.0f,
           1.0f, 1.0f,
           0.0f, 1.0f};
-      meshes = new Mesh[]{
-          new Mesh(positions, textCoords, indices, textures[0])
-      };
-      /*
+
       animationList = new Animation[] {
-          new Animation(amount, fps, fileName1, positions, textCoords, indices);
-      }
-       */
+          new Animation(4, 10, 5.0f, "resources/textures/ereaser", positions, textCoords, indices)
+      };
+
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
+  private String character;
   private final int PUTABOMB = 1;//SEARCH status for findWay function
   private final int GOTOSAFEPOS = 0;//BREAKWALL status for findWay function
   private final int FIND = 2;
@@ -77,6 +67,8 @@ public class Player extends GameItem implements Movable, Auto {
   private Bomb inBomb;// bomb in leg of object
   private int bombPower;
   private Timer time = new Timer();
+  private Timer lureTime;
+  private boolean isLured;
 
 
   public Player(Mesh mesh) throws Exception {
@@ -91,8 +83,8 @@ public class Player extends GameItem implements Movable, Auto {
   }
 
   public Player(String character) throws Exception {
-    this(meshes[characters.get(character)]);
-    //this(animationList[characters.get(character)]);
+    this(animationList[characters.get(character)]);
+    this.character = character;
   }
 
   public Player(Animation animation) {
@@ -104,10 +96,12 @@ public class Player extends GameItem implements Movable, Auto {
     status = FIND;
     isInBomb = false;
     targetPosition = new Vector3f(8, 8, 0);
+    isLured = false;
   }
 
   @Override
   public void render(Renderer renderer) {
+    this.meshItem = animationList[characters.get(character)].getCurrentMesh();
     renderer.render(this);
   }
 
@@ -656,6 +650,22 @@ public class Player extends GameItem implements Movable, Auto {
     if (speed < 0.25f) {
       speed = 0.25f;
       return;
+    }
+  }
+
+  public void lured() {
+    isLured = true;
+    autoMode = true;
+    lureTime = new Timer();
+    lureTime.init();
+  }
+
+  public void lureHandle() {
+    if (isLured) {
+      if (lureTime.getTime() - lureTime.getLastLoopTime() > 10.0f) {
+        isLured = false;
+        autoMode = false;
+      }
     }
   }
 }
