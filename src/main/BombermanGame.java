@@ -379,6 +379,7 @@ public class BombermanGame implements IGameLogic {
         menu.getMesh().cleanUp();
       }
     }
+    int x = 1;
   }
 
 }
