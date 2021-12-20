@@ -18,6 +18,10 @@ public class Timer {
     return System.nanoTime() / 1_000_000_000.0;
   }
 
+  public int getDisplayTime() {
+    return (int) (getTime() - lastLoopTime);
+  }
+
   public float getElapsedTime() {
     double time = getTime();
     float elapsedTime = (float) (time - lastLoopTime);

@@ -2,15 +2,35 @@ package engine.network;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Server {
   public static final int maxUsers = 10;
   public static user[] usersList = new user[maxUsers];
   public static int totalClientsOnline = 0;
   static ServerSocket ss;
+  public static File file = new File("resources/leaderboard/leaderboard.txt");
+  public static Scanner sc;
+  public static int bestTime;
+  public static String bestPlayer;
+  static {
+    try {
+      sc = new Scanner(file);
+      String temp = sc.nextLine();
+      bestTime = Integer.parseInt(temp.split("-")[1]);
+      bestPlayer = temp.split("-")[0];
+      sc.close();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
 
   public static void main(String[] args) throws Exception {
     try {
@@ -42,6 +62,7 @@ class user extends Thread {
   public DataInputStream userDIS;
   public DataOutputStream userDOS;
   public Thread t;
+  public static String secretKey = new String("1237164");
   Server tirth = new Server();
   int userID;
   OutputStream os;
@@ -66,9 +87,23 @@ class user extends Thread {
     while (true) {
       try {
         message = userDIS.readUTF();
+        if (message.startsWith(secretKey)) {
+          String name = message.split("-")[1];
+          int time = Integer.parseInt(message.split("-")[2]);
+          if (time < Server.bestTime) {
+            PrintWriter pw = new PrintWriter("resources/leaderboard/leaderboard.txt");
+            pw.print(name + "-" + time);
+            tirth.sendMessageToAll("NEW RECORD!!! --- " + name + " ----- " + time + " seconds!!!");
+            continue;
+          }
+        }
+        else if (message.endsWith("leaderboard./.")){
+          tirth.sendMessageToAll("BEST PLAYER: " + Server.bestPlayer + " : " + Server.bestTime);
+          continue;
+        }
         tirth.sendMessageToAll(message);
       } catch (Exception e) {
-
+        e.printStackTrace();
       }
     }
   }

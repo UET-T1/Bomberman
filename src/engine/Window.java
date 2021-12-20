@@ -22,6 +22,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetFramebufferSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
@@ -40,11 +41,14 @@ import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 import static org.lwjgl.opengl.GL14.glBlendColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 public class Window {
+
+  private Timer timer;
 
   private final String title;
 
@@ -58,12 +62,15 @@ public class Window {
 
   private boolean vSync;
 
+  private double timeTitle;
+
   public Window(String title, int width, int height, boolean vSync) {
     this.title = title;
     this.width = width;
     this.height = height;
     this.vSync = vSync;
     this.resized = false;
+    this.timer = new Timer();
   }
 
 
@@ -71,6 +78,7 @@ public class Window {
     // Setup an error callback. The default implementation
     // will print the error message in System.err.
     GLFWErrorCallback.createPrint(System.err).set();
+
 
     // Initialize GLFW. Most GLFW functions will not work before doing this.
     if (!glfwInit()) {
@@ -136,6 +144,9 @@ public class Window {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBlendColor(1.0f, 1.0f, 1.0f, 0.0f);
+
+    timer.init();
+
   }
 
   public long getWindowHandle() {
@@ -183,6 +194,8 @@ public class Window {
   }
 
   public void update() {
+    timeTitle = timer.getDisplayTime();
+    GLFW.glfwSetWindowTitle(windowHandle, "Playing time: " + timeTitle + " seconds!");
     glfwSwapBuffers(windowHandle);
     glfwPollEvents();
   }
