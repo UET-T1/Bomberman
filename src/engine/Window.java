@@ -48,9 +48,9 @@ public class Window {
 
   private final String title;
 
-  private int width;
+  public int width;
 
-  private int height;
+  public int height;
 
   private long windowHandle;
 

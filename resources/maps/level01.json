@@ -24,13 +24,13 @@
     },
     "map": [
         { "0": "wwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwww" },
-        { "0": "w_p_     1    w", "1": "w             w" },
+        { "0": "w_p_     4    w", "1": "w             w" },
         { "0": "w_b b b b b b w", "1": "w             w" },
         { "0": "w            fw", "1": "w             w" },
         { "0": "w b b b b b b w", "1": "w             w" },
-        { "0": "w            0e", "1": "w             w" },
+        { "0": "w            3e", "1": "w             w" },
         { "0": "w bb b b b b  w", "1": "w             w" },
-        { "0": "w  f 1        w", "1": "w             w" },
+        { "0": "w  f 2        w", "1": "w             w" },
         { "0": "wwwwwwwwwwwwwww", "1": "wwwwwwwwwwwwwww" }
     ],
     "bonus": {

@@ -12,7 +12,6 @@ import entities.Gate;
 import entities.Grass;
 import entities.Ink;
 import entities.Item;
-import entities.Menu;
 import entities.PenA;
 import entities.Player;
 import entities.Wall;
@@ -45,7 +44,6 @@ public class ObjectManager {
   public static Ink[] ink;
   public static Witch[] witch;
   public static Player[] humanEnemy;
-  public static Menu menu;
   public static int width;
   public static int height;
   public static float durationTimeBomb;
@@ -100,11 +98,6 @@ public class ObjectManager {
 
   public static Witch[] getWitch() {
     return witch;
-  }
-
-  public static void createMenu() throws Exception {
-    menu = new Menu();
-    menu.setPosition(0, 0, -1.5f);
   }
   
   public static void createMap(String path) throws Exception {
@@ -220,7 +213,7 @@ public class ObjectManager {
             newHumanEnemy[i] = humanEnemy[i];
           }
           humanEnemy = newHumanEnemy;
-          humanEnemy[humanEnemy.length - 1] = new Player("Deadpool");
+          humanEnemy[humanEnemy.length - 1] = new Player("Enemy");
           humanEnemy[humanEnemy.length - 1].setPosition(x, y, 0);
         }
 
@@ -760,7 +753,8 @@ public class ObjectManager {
           }
       }
 
-    if (obj instanceof PenA || obj instanceof Pencil) {
+    if (obj instanceof PenA || obj instanceof Pencil || obj instanceof Ink
+        || obj instanceof Witch) {
       Vector3f pos = gate.getPosition();
       if (pos.x < x + 1 &&
           x < pos.x + 1 &&
